@@ -52,7 +52,12 @@ module.exports = {
           aspects: ['invalidHref', 'preferButton'],
         },
       ],
-      'no-console': ['warn', { allow: ['warn', 'error'] }],
+      'no-console': [
+        'warn',
+        {
+          allow: ['warn', 'error'],
+        },
+      ],
       '@typescript-eslint/no-unused-vars': [
         'warn',
         {
@@ -62,4 +67,4 @@ module.exports = {
       ],
       '@typescript-eslint/no-explicit-any': 'off',
     },
-  }
+  };
