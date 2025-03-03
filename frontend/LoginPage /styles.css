@@ -11,7 +11,7 @@
 body{
 
     background-color: whitesmoke;
-    background-image: linear-gradient(90deg, rgb(103, 190, 103), black)
+    background-image: linear-gradient(30deg, rgb(103, 190, 103), black)
     
 }
 
@@ -22,7 +22,6 @@ body{
 }
 
 .user-name{
-    text-align: center;
     font-size: 10px;
     width: 20%;
 
@@ -32,15 +31,15 @@ body{
 }
 .submit-button{
    
- 
+    
     border-radius: 10px;
     text-align: center;
     font-size: 10px;
     color: white;
-    width: 20%
+    
 }
 .user-email{
-    text-align: center;
+    
     
 
 }
