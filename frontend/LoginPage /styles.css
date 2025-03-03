@@ -1,0 +1,46 @@
+#top-header{
+    background-color: rgb(218, 255, 192);
+    color: black;
+    padding: 50px;
+    font-size: 50px;
+    border-radius: 10px;
+    text-align: center;
+
+}
+
+body{
+
+    background-color: whitesmoke;
+    background-image: linear-gradient(90deg, rgb(103, 190, 103), black)
+    
+}
+
+.login-container{
+    padding: 40px 40px 40px 50%;
+    
+    
+}
+
+.user-name{
+    text-align: center;
+    font-size: 10px;
+    width: 20%;
+
+
+
+
+}
+.submit-button{
+   
+ 
+    border-radius: 10px;
+    text-align: center;
+    font-size: 10px;
+    color: white;
+    width: 20%
+}
+.user-email{
+    text-align: center;
+    
+
+}
