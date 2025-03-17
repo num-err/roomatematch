@@ -51,6 +51,18 @@ def login():
     # In a real app, we need to generate a token or session.
     return jsonify({'message': 'Logged in successfully'}), 200
 
+
+@app.route('/get_data' , methods=['GET'])
+def get_data():
+    data = {'message': 'This is a get request'}
+    return jsonify(data)
+
+
+
+
+
+
+
 # Main block to run the app.
 if __name__ == '__main__':
     # Create an application context and initialize the DB.
