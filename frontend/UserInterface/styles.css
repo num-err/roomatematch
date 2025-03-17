@@ -2,10 +2,16 @@
     border: 1px solid black;
     border-width: 100%;
     padding: 100px 100px 100px 100px;
-    background-image: linear-gradient(30deg, rgb(108, 108, 202), orange)
+    background-image: linear-gradient(30deg, rgb(108, 108, 202), orange);
+    
 
 
-
+}
+.user-profile-setup:hover,
+.user-roomate-matches:hover,
+.user-roomate-preferences:hover{
+    text-decoration: underline;
+    cursor: pointer;
 }
 .user-roomate-preferences{
     border: 1px solid black;
@@ -28,7 +34,7 @@
     border: 1px solid black;
     border-width: 100%;
     padding: 100px 100px 100px 100px;
-    
+    padding-left: 30%;
 
 }
 .headers{
@@ -43,3 +49,29 @@ body{
     background-color: whitesmoke;
     
 }
+
+.side-bar-title{
+      
+}
+
+.side-bar{
+    width: 250px;  
+    border: 1px solid black;
+
+
+
+
+}
+
+.side-bar-nav li a{
+    color: black;
+    text-decoration: none;
+
+
+}
+.setup{
+    display: flex;
+   
+}
+
+
