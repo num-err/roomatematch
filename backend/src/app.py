@@ -57,6 +57,15 @@ def get_data():
     data = {'message': 'This is a get request'}
     return jsonify(data)
 
+@app.route('/post_data', methods=['POST'])
+def post_data():
+    if request.is_json:
+        data = request.get_json()
+        return jsonify({'message': 'This is a POST request', 'data': data}), 201
+    else:
+         return jsonify({'error': 'Request must be JSON'}), 400
+         
+
 
 
 
