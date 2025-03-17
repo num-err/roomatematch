@@ -1,0 +1,45 @@
+.user-profile-setup{
+    border: 1px solid black;
+    border-width: 100%;
+    padding: 100px 100px 100px 100px;
+    background-image: linear-gradient(30deg, rgb(108, 108, 202), orange)
+
+
+
+}
+.user-roomate-preferences{
+    border: 1px solid black;
+    border-width: 100%;
+    padding: 100px;
+    background-image: linear-gradient(30deg, blue, orange)
+
+
+
+}
+.user-roomate-matches{
+    border: 1px solid black;
+    border-width: 100%;
+    padding: 100px;
+    background-image: linear-gradient(30deg, blue, orange)
+
+
+}
+.user-tab{
+    border: 1px solid black;
+    border-width: 100%;
+    padding: 100px 100px 100px 100px;
+    
+
+}
+.headers{
+    text-align: center;
+    background-color: rgb(211, 161, 101);
+    color: white;
+    padding: 10px;
+
+}
+
+body{
+    background-color: whitesmoke;
+    
+}
