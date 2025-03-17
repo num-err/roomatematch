@@ -11,6 +11,7 @@ app.config.from_object(Config)
 db.init_app(app)
 
 # Registration route for creating new users.
+
 @app.route('/register', methods=['POST'])
 def register():
     data = request.get_json()  # Get JSON data from the request.
