@@ -49,8 +49,20 @@ def login():
     if user is None or not user.check_password(password):
         return jsonify({'error': 'Invalid credentials'}), 400
 
-    # In a real app, you might generate a token or session.
+    # In a real app, we need to generate a token or session.
     return jsonify({'message': 'Logged in successfully'}), 200
+
+
+@app.route('/get_data' , methods=['GET'])
+def get_data():
+    data = {'message': 'This is a get request'}
+    return jsonify(data)
+
+
+
+
+
+
 
 # Main block to run the app.
 if __name__ == '__main__':
