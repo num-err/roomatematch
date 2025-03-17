@@ -5,35 +5,43 @@
     </head>
     <body>
         <h1 id="top-header" class="bordered-content">Login to My Roommate Match</h1>
-       
+
         <!-- 
             Playing with color for background of front page 
-
             *Could make a css page to style the content 
-
             *Check 2/26 notes for JavaScript
                 *storing emails
                     *would need to make a JavaScript function
-
-
             <h1 style="padding: 20px; background-color: rgb(0, 42, 255); border: 1px solid; max-width: 300px;"> </h1>
         -->
         <div class="login-container">
-        <h2>Login</h2>
+
         <!--Text and Buttons-->
-        <div 
-            id="login-bar" class="login-input">
-            <p>Username</p>
-            <div><input type="text" class="user-name" placeholder="Name"></div>
-            <p>Class year</p>
-            <div><input type="text" class="user-classYear" placeholder = "class year"></div>
-            <p>Swarthmore Email</p>
-            <div><input type="text" class="user-email" placeholder="Swarthmore Email..."></div>
-            
-            <div><button class="submit-button"> Sumbit</button></div>
+        <div id="login-bar" class="login-input">
+            <h2>Login</h2>
+            <!-- <p>Username</p> -->
+            <div><input type="text" class="user-name" placeholder="Enter your name"></div><br>
+            <!-- <p>Class year</p> -->
+            <div><input type="text" class="user-classYear" placeholder = "Class year"></div><br>
+            <!-- <p>Swarthmore Email</p> -->
+            <div><input type="text" class="user-email" placeholder="Swarthmore Email..."></div><br>
+
+            <div><button class="submit-button" onclick="buttonClicked()"> Sumbit</button></div>
 
         </div>
         </div>
+        <script>
+            function buttonClicked() {
+                var userName = document.getElementsByClassName("user-name");
+                var userEmail = document.getElementsByClassName("user-email");
+                var userClassYear = document.getElementsByClassName("user-classYear");
+                alert("Yay! You clicked the button");
+                console.log("User Name: " + userName + " " + "User Email: " + userEmail + " " + "User Class Year: " + userClassYear);
+            }
+
+
+        </script>
+
         <!-- Results -->
     </body>
 </html>
