@@ -2,7 +2,7 @@
     border: 1px solid black;
     border-width: 100%;
     padding: 100px 100px 100px 100px;
-    background-image: linear-gradient(30deg, rgb(108, 108, 202), orange);
+    background-image: linear-gradient(150deg, rgb(106, 133, 136), rgb(219, 213, 110));
     
 
 
@@ -17,7 +17,7 @@
     border: 1px solid black;
     border-width: 100%;
     padding: 100px;
-    background-image: linear-gradient(30deg, blue, orange)
+    background-image: linear-gradient(150deg, rgb(106, 133, 136), rgb(219, 213, 110));
 
 
 
@@ -26,7 +26,7 @@
     border: 1px solid black;
     border-width: 100%;
     padding: 100px;
-    background-image: linear-gradient(30deg, blue, orange)
+    background-image: linear-gradient(150deg, rgb(106, 133, 136), rgb(219, 213, 110));
 
 
 }
@@ -54,16 +54,19 @@ body{
 .side-bar{
     position: fixed;
     left: 0;
-    width: 250px;
+    width: 300px;
     height: 100%;
-    background:rgb(21, 21, 65);
+    background: linear-gradient(150deg, rgb(106, 133, 136), rgb(219, 213, 110));
+    color: white;
+    transition: 0.4s;
+    
 }
 .side-bar h1{
     font-size: 22px;
     color: white;
     text-align: center;
     line-height: 70px;
-    background: rgb(21, 21, 65);
+    background-image: linear-gradient(150deg, rgb(106, 133, 136), rgb(219, 213, 110));
     user-select: none;
 }
 .side-bar ul{
@@ -76,16 +79,16 @@ body{
     padding-left: 40px;
     box-sizing: border-box;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
-    border-bottom: 1px solid rgb(109, 30, 30);
+    border-bottom: 1px solid rgb(0, 0, 0);
     transition: 0.4s;
-
+ 
 }
 ul li:hover a{
     padding-left: 50px;
-    
-
 
 }
-
+.sidebar ul a li{
+    margin-right: 16px;
+}
 
 
