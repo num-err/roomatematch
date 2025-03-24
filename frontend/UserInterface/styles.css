@@ -2,7 +2,7 @@
     border: 1px solid black;
     border-width: 100%;
     padding: 100px 100px 100px 100px;
-    background-image: linear-gradient(30deg, rgb(108, 108, 202), orange);
+    background-image: linear-gradient(150deg, rgb(106, 133, 136), rgb(219, 213, 110));
     
 
 
@@ -17,7 +17,7 @@
     border: 1px solid black;
     border-width: 100%;
     padding: 100px;
-    background-image: linear-gradient(30deg, blue, orange)
+    background-image: linear-gradient(150deg, rgb(106, 133, 136), rgb(219, 213, 110));
 
 
 
@@ -26,7 +26,7 @@
     border: 1px solid black;
     border-width: 100%;
     padding: 100px;
-    background-image: linear-gradient(30deg, blue, orange)
+    background-image: linear-gradient(150deg, rgb(106, 133, 136), rgb(219, 213, 110));
 
 
 }
@@ -56,14 +56,14 @@ body{
     left: 0;
     width: 250px;
     height: 100%;
-    background:rgb(21, 21, 65);
+    background: linear-gradient(150deg, rgb(106, 133, 136), rgb(219, 213, 110))
 }
 .side-bar h1{
     font-size: 22px;
     color: white;
     text-align: center;
     line-height: 70px;
-    background: rgb(21, 21, 65);
+    background-image: linear-gradient(150deg, rgb(106, 133, 136), rgb(219, 213, 110));
     user-select: none;
 }
 .side-bar ul{
