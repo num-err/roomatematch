@@ -1,9 +1,9 @@
-from flask import Flask, request, jsonify  
-from config import Config  
-from models import User, db  
+from flask import Flask, request, jsonify, render_template
+from config import Config
+from models import User, db
 
 # Create a new Flask app instance.
-app = Flask(__name__)
+app = Flask(__name__, template_folder='../frontend')
 app.config.from_object(Config)
 db.init_app(app)
 
@@ -11,7 +11,7 @@ db.init_app(app)
 
 @app.route('/register', methods=['POST'])
 def register():
-    data = request.get_json()  
+    data = request.get_json()
     username = data.get('username')
     email = data.get('email')
     password = data.get('password')
@@ -27,7 +27,7 @@ def register():
     # Create a new user, set the hashed password.
     user = User(username=username, email=email)
     user.set_password(password)
-    
+
     db.session.add(user)
     db.session.commit()
     return jsonify({'message': 'User registered successfully'}), 201
@@ -47,10 +47,14 @@ def login():
     return jsonify({'message': 'Logged in successfully'}), 200
 
 
-@app.route('/get_data' , methods=['GET'])
-def get_data():
-    data = {'message': 'This is a get request'}
-    return jsonify(data)
+@app.route('/')
+def index():
+    # Fetch data from the database and prepare for rendering
+    data = {'message': 'This is a get request'}  # Replace this with your actual data retrieval logic
+
+    # Render the 'index.html' template and pass the retrieved data for rendering
+    return render_template('index.html', data=data)
+
 
 @app.route('/post_data', methods=['POST'])
 def post_data():
@@ -59,13 +63,10 @@ def post_data():
         return jsonify({'message': 'This is a POST request', 'data': data}), 201
     else:
          return jsonify({'error': 'Request must be JSON'}), 400
-         
-
-
 
 
 if __name__ == '__main__':
-    
+
     with app.app_context():
-        db.create_all()  
+        db.create_all()
     app.run(debug=True)
