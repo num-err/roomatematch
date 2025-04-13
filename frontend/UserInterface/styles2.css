@@ -1,0 +1,105 @@
+body{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: dodgerblue;
+    color:darkgrey;
+}
+
+h1{
+    color:blue;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.section{
+    background-color: white;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.section h2{
+    color:blue;
+    border-bottom: 2px solid #ecf0f1;
+    padding-bottom: 10px;
+    margin-top: 0;
+}
+
+.progress-bar {
+    background-color: #ecf0f1;
+    height: 10px;
+    border-radius: 5px;
+    margin-bottom: 30px;
+    overflow: hidden;
+}
+
+.progress{
+    background-color: #ecf0f1;
+    height: 100%;
+    width: 0%;
+    transition: widrh 0.3s;
+}
+
+.question{
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+
+}
+
+select, input[type="radio"]{
+    margin-bottom: 5px;
+
+}
+
+.option {
+    display: flex;
+    align-items: center;
+}
+
+.option input{
+    margin-right: 8px;
+}
+
+button {
+    background-color: dodgerblue;
+    color: white;
+    border:none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 10px;
+}
+
+button:hover{
+    background-color:royalblue;
+}
+
+.nav-buttons{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.hidden {
+    display:none;
+}
+
+.importance {
+    margin-top: 8px;
+    border-top: 1px dotted #ccc;
+    padding-top: 8px;
+}
+
+.importance label{
+    font-weight: normal;
+    font-style: italic;
+}
