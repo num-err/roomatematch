@@ -245,7 +245,31 @@ def send_message():
     return jsonify({'message' : 'Message sent succesfully'}) , 201
 
     #comment merge conflict 
-    
+
+#This is a route to get all the messages shared betweeen two students
+# It is going to be relevant if we decide to go with chat instead of just a notification message
+
+@app.route('/messages', methods=['GET'])
+def get_messages():
+    user1 = request.args.get('user1', type=int)
+    user2 = request.args.get('user2', type=int)
+
+    if not user1 or not user2:
+        return jsonify({'error': 'Both user IDs are required'}), 400
+
+    messages = Message.query.filter(
+        ((Message.sender_id == user1) & (Message.receiver_id == user2)) |
+        ((Message.sender_id == user2) & (Message.receiver_id == user1))
+    ).order_by(Message.timestamp.asc()).all()
+
+    return jsonify([{
+        'sender_id': m.sender_id,
+        'receiver_id': m.receiver_id,
+        'content': m.content,
+        'timestamp': m.timestamp.isoformat()
+    } for m in messages]), 200
+
+
 
 if __name__ == '__main__':
     with app.app_context():
