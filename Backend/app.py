@@ -220,6 +220,33 @@ def post_data():
         return jsonify({'message': 'This is a POST request', 'data': data}), 201
     return jsonify({'error': 'Request must be JSON'}), 400
 
+
+
+# This is an endpoint set for sending a message 
+@app.route('/messages' , methods=['POST'])
+def send_message():
+    data = request.get_json()
+    sender_id = data.get('sender_id')
+    receiver_id = data.get('receiver_id')
+    content = data.get('content')
+
+    if not sender_id or not receiver_id or not content:
+        return jsonify({'error': 'Missing fields'}), 400
+
+    message = Message(
+        sender_id = sender_id
+        receiver_id = receiver_id
+        content = content
+    ) 
+
+    db.session.add(message)
+    db.session.commit()
+
+    return jsonify({'message' : 'Message sent succesfully'}) , 201
+
+    #comment merge conflict 
+    
+
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()
