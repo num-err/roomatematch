@@ -30,3 +30,17 @@ class User(db.Model):
             "classyear": self.classyear,
             "created_at": self.created_at.isoformat()
         }
+
+class Questionnaire(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(
+        db.Integer, db.ForeignKey('user.id'),
+        unique=True, nullable=False
+    )
+    answers = db.Column(db.JSON, nullable=False)
+    timestamp = db.Column(db.DateTime, default=datetime.utcnow)
+
+    # Simple one‑to‑one relationship back to User
+    user = db.relationship('User', backref=db.backref(
+        'questionnaire', uselist=False, cascade='all,delete-orphan'
+    ))
