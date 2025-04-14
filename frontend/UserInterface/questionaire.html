@@ -2,8 +2,9 @@
     <head>
         <meta charset="utf-8" />
         <title>Roommate Questionnaire</title>
-        <!-- Main UI stylesheet -->
         <link rel= "stylesheet" href="styles2.css">
+        <!-- Form handling script -->
+        <script src="../js/form.js" defer></script>
     </head>
 
     <body>
@@ -512,54 +513,6 @@
 
 
         <!-- JavaScript to POST answers to Flask -->
-        <script>
-            /**
-             * Collect all answers and send to /api/questionnaire.
-             * Requires the logged‑in user object in localStorage ("user").
-             */
-            document
-                .getElementById("roommate-form")
-                .addEventListener("submit", async (evt) => {
-                    evt.preventDefault();
-
-                    // Build { name: value } from every form control
-                    const fd = new FormData(evt.target);
-                    const answers = {};
-                    for (const [k, v] of fd.entries()) answers[k] = v;
-
-                    const user = JSON.parse(
-                        localStorage.getItem("user") || "{}",
-                    );
-                    if (!user.id) {
-                        alert("User info missing – please log in again.");
-                        return;
-                    }
-
-                    try {
-                        const resp = await fetch("/api/questionnaire", {
-                            method: "POST",
-                            headers: { "Content-Type": "application/json" },
-                            body: JSON.stringify({ user_id: user.id, answers }),
-                        });
-                        const data = await resp.json();
-
-                        if (resp.ok && data.match) {
-                            alert(
-                                `🎉 Your roommate match is ${data.match.username}!`,
-                            );
-                        } else if (resp.ok) {
-                            alert(
-                                "Questionnaire saved – we’ll notify you once a match is found.",
-                            );
-                        } else {
-                            alert(data.error || "Submission failed.");
-                        }
-                    } catch (err) {
-                        console.error(err);
-                        alert("Network error – see console for details.");
-                    }
-                });
-        </script>
+        <\!-- Form handling is now in the external form.js file -->
     </body>
 </html>
-
