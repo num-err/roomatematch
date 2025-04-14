@@ -3,26 +3,21 @@
     <head>
         <meta charset="utf-8" />
         <title>Login to Roommate Match</title>
-        <link rel="stylesheet" href="styles.css" />
+        <!-- Use url_for so the correct static path is injected -->
+        <link
+            rel="stylesheet"
+            href="{{ url_for('static', filename='LoginPage/styles.css') }}"
+        />
     </head>
     <body>
         <h1 id="top-header" class="bordered-content">
             Login to My Roommate Match
         </h1>
 
-        <!--
-            Playing with color for background of front page
-            *Could make a css page to style the content
-            *Check 2/26 notes for JavaScript
-                *storing emails
-                    *would need to make a JavaScript function
-            <h1 style="padding: 20px; background-color: rgb(0, 42, 255); border: 1px solid; max-width: 300px;"> </h1>
-        -->
         <div class="login-container">
-            <!--Text and Buttons-->
             <div id="login-bar" class="login-input">
                 <h2>Login</h2>
-                <!-- <p>Username</p> -->
+
                 <div>
                     <input
                         type="text"
@@ -32,7 +27,7 @@
                     />
                 </div>
                 <br />
-                <!-- <p>Class year</p> -->
+
                 <div>
                     <input
                         type="text"
@@ -42,7 +37,7 @@
                     />
                 </div>
                 <br />
-                <!-- <p>Swarthmore Email</p> -->
+
                 <div>
                     <input
                         type="text"
@@ -52,7 +47,7 @@
                     />
                 </div>
                 <br />
-                <!-- <p>Password</p> -->
+
                 <div>
                     <input
                         type="password"
@@ -62,7 +57,7 @@
                     />
                 </div>
                 <br />
-                <!-- Submit button -->
+
                 <div>
                     <button class="submit-button" onclick="buttonClicked()">
                         Submit
@@ -70,33 +65,25 @@
                 </div>
             </div>
         </div>
+
         <script>
             /*
              * buttonClicked(): gather form fields and send a POST request
              * to the Flask /login endpoint. On success, redirect to the
-             * main UI page.
+             * questionnaire page and stash user info in localStorage.
              */
             function buttonClicked() {
-                // Grab input values using their IDs
                 const userName = document
                     .getElementById("user-name")
-                    .value.trim();
-                const userEmail = document
-                    .getElementById("user-email")
-                    .value.trim();
-                const userClassYear = document
-                    .getElementById("user-classYear")
                     .value.trim();
                 const userPassword =
                     document.getElementById("user-password").value;
 
-                // Simple front‑end validation
                 if (!userName || !userPassword) {
                     alert("Please enter both username and password.");
                     return;
                 }
 
-                // Send credentials to backend
                 fetch("/login", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
@@ -109,9 +96,16 @@
                         const data = await response.json();
                         if (response.ok) {
                             alert("Login successful!");
-                            // Redirect to user interface page (adjust path if needed)
+
+                            // Save user for later API calls
+                            localStorage.setItem(
+                                "user",
+                                JSON.stringify(data.user),
+                            );
+
+                            // Go straight to the questionnaire
                             window.location.href =
-                                "../UserInterface/index.html";
+                                "{{ url_for('static', filename='UserInterface/questionnaire.html') }}";
                         } else {
                             alert(data.error || "Login failed");
                         }
@@ -120,19 +114,7 @@
                         console.error(err);
                         alert("Network error – see console for details.");
                     });
-
-                // Original debug message
-                console.log(
-                    "User Name: " +
-                        userName +
-                        " | User Email: " +
-                        userEmail +
-                        " | User Class Year: " +
-                        userClassYear,
-                );
             }
         </script>
-
-        <!-- Results -->
     </body>
 </html>
