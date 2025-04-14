@@ -8,7 +8,7 @@ body{
 }
 
 h1{
-    color:blue;
+    color:white;
     text-align: center;
     margin-bottom: 30px;
 }
@@ -44,6 +44,7 @@ h1{
 }
 
 .question{
+    color:royalblue;
     margin-bottom: 20px;
 }
 
@@ -60,12 +61,16 @@ select, input[type="radio"]{
 }
 
 .option {
+    color: gray;
     display: flex;
     align-items: center;
 }
 
 .option input{
     margin-right: 8px;
+}
+.option label{
+    font-weight: normal;
 }
 
 button {
@@ -80,7 +85,7 @@ button {
 }
 
 button:hover{
-    background-color:royalblue;
+    background-color:rgb(65, 225, 217);
 }
 
 .nav-buttons{
@@ -102,4 +107,5 @@ button:hover{
 .importance label{
     font-weight: normal;
     font-style: italic;
+    color:dimgray;
 }

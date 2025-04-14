@@ -1,12 +1,19 @@
 <html>
-<body>
 
+    <head>
+        <meta charset="utf-8" />
+        <title>Roommate Match Questionaire</title>
+        <link rel="stylesheet" href="styles2.css" />
+    </head>
+    
+<body>
 <h1>Sleep Preferences</h1>
 <form id="roommate-form">
     <div class="section" id="section1">
         <!-- Question 1 -->
+        <h2>Question 1</h2>
         <div class="question">
-            <label for="bedtime">1. What time do you typically go to bed on weeknights?</label>
+            <label for="bedtime"> What time do you typically go to bed on weeknights?</label>
             <br>
             <select id="bedtime" name="bedtime" required>
                 <option value="">Select one...</option>
@@ -34,8 +41,9 @@
             </div>
         </div><br>
             <!-- Question 2 -->
+            <h2> Question 2</h2>
             <div class="question">
-                <label>2. How do you feel about your roommate match using lights/screens while you're sleeping</label><br>
+                <label>How do you feel about your roommate match using lights/screens while you're sleeping</label><br>
                 <div class="options">
                     <div class="option">
                         <input type="radio" id="lights-1" name="lights" value="1" required>
@@ -74,8 +82,9 @@
             </div><br>
 
             <!-- Question 3 -->
+            <h2>Question 3</h2>
             <div class="question">
-                <label>3. Are you comfortable with overnight guests?</label><br>
+                <label>Are you comfortable with overnight guests?</label><br>
                 <div class="options">
                     <div class="option">
                         <input type="radio" id="guests-1" name="guests" value="1" required>
@@ -96,7 +105,7 @@
                 </div>
             </div>
             <br>
-            </div><br>
+
             <div class="importance">
                 <label>How Important is this for your roommate match</label><br>
                 <div class="options">
@@ -114,69 +123,67 @@
                     </div>
                 </div>
             </div>    
-        </div><br>
-
-        <div class="nav-buttons">
-            <button type="button" id="prev2">Previous</button>
-            <button type="button" id="next2">Next: Cleanliness</button>
-        </div>
-    </div>
-
-
-
-
-
-
-
-</form>
-
-<!--- Cleanliness and Organization Section-->
-    <div class="section" id="section2"> 
-        <h2>Cleanliness and Organization</h2>
-        <div class ="question">
-            <h3>Question 1</h3>
-            <label> How often do you clean your living space?</label>
-            <div class="option">
-                <input type="radio" id="clean-1" name= "clean" value="1" required>
-                <label for="clean-1"> Daily</label> 
-            </div>
-            <div class="option">
-                <input type="radio" id="clean-2" name="clean" value="2">
-                <label for="clean-2">2-3 times a week</label>
-            </div>
-            <div class = "option">
-                <input type= "radio" id=" clean-3" name="clean" value=" 3">
-                <label for=" clean-3"> Once a week</label>
-            </div>
-            <div class="option">
-                <input type="radio" id= "clean-4" name="clean" value=" 4">
-                <label for=" clean-4"> Every few weeks</label>
-            </div>
-            <div class="option">
-                <input type="radio" id = "clean-5" name= "clean" value= "5">
-                <label for = "clean-5"> Rarely or never</label>
-            </div>
             <br>
 
+            <div class="nav-buttons">
+                <button type="button" id="prev2">Previous</button>
+                <button type="button" id="next2">Next: Cleanliness</button>
+            </div>
+    </div>
+</form>
+<br>
 
+<!--- Cleanliness and Organization Section-->
+<h1>Cleanliness and Organization</h1>
+<form id="roommate-form2">
+    <div class="section" id="section2"> 
+        <h2>Question 1</h2>
+        <div class ="question">
+            <label> How often do you clean your living space?</label>
+            <div class="options">
+                <div class="option">
+                    <input type="radio" id="clean-1" name= "clean" value="1" required>
+                    <label for="clean-1"> Daily</label> 
+                </div>
+                <div class="option">
+                    <input type="radio" id="clean-2" name="clean" value="2">
+                    <label for="clean-2">2-3 times a week</label>
+                </div>
+                <div class = "option">
+                    <input type= "radio" id=" clean-3" name="clean" value=" 3">
+                    <label for=" clean-3"> Once a week</label>
+                </div>
+                <div class="option">
+                    <input type="radio" id= "clean-4" name="clean" value=" 4">
+                    <label for=" clean-4"> Every few weeks</label>
+                </div>
+                <div class="option">
+                    <input type="radio" id = "clean-5" name= "clean" value= "5">
+                    <label for = "clean-5"> Rarely or never</label>
+                </div>
+            </div>
+            <br>
             <div class="importance">
                 <label>How important is this for your roommate match?</label>
-            </div class="options">
-                <div class="option">
-                    <input type="radio" id="clean-imp1" name="clean-importance" value="1" required>
-                    <label for="clean-imp1">Not important</label> 
+                </div class="options">
+                    <div class="option">
+                        <input type="radio" id="clean-imp1" name="clean-importance" value="1" required>
+                        <label for="clean-imp1">Not important</label> 
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="clean-imp2" name="clean-importance" value="2">
+                        <label for="clean-imp2">Somewhat important</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="clean-imp3" name="clean-importance" value="3">
+                        <label for="clean-imp3">Very important</label>
+                    </div>
                 </div>
-                <div class="option">
-                    <input type="radio" id="clean-imp2" name="clean-importance" value="2">
-                    <label for="clean-imp2">Somewhat important</label>
-                </div>
-                <div class="option">
-                    <input type="radio" id="clean-imp3" name="clean-importance" value="3">
-                    <label for="clean-imp3">Very important</label>
-                </div>
+            <div>
+            <br>
 
-            </div class="question">
-                <h3>Question 2</h3>
+        </div class="question">
+            <h2>Question 2</h2>
                 <label>What is  your tolerance for messiness?</label>
                 <div class="options">
                     <div class="option">
@@ -195,10 +202,8 @@
                         <input type="radio" id="mess-4" name="mess" value="4">
                         <label for="mess-4">Very tolerant of mess</label>
                     </div>
-            </div>
-
-            <br>
-
+                </div>
+            <div><br>
             <div class="importance">
                 <label>How important is this for your roommate match?</label>
                 <div class="options">
@@ -215,11 +220,10 @@
                         <label for="mess-imp3">Very important</label>
                     </div>
                 </div>
-            </div>
+            </div><br>
 
+            <h2>Question 3</h2>
             <div class="question">
-                <h3>Question 3</h3>
-
                 <label>How do you approach shared items (cleaning supplies, toilet paper, fans, etc)?</label>
                 <div class="options">
                     <div class="option">
@@ -241,6 +245,7 @@
                 </div>
             </div>
             <br>
+
             <div class="importance">
                 <label> How important is this for your roommate match?</label>
                 <div class="options">
@@ -259,191 +264,142 @@
                 </div>
             </div>
             <br>
+
             <div class="nav-buttons">
                 <button type="button" id="prev2">Previous</button>
                 <button type="button" id="next2">Next: Study Habbits</button>
-            </div>
+            </div>   
+        </div> 
+    </div>
+</form>
+<br>
 
 <!-- Study Habits-->
-
 <h1>Study Habits</h1>
-<<<<<<< HEAD
-<div class="section" id="section3">
-    <div class="question">
-        <h3>Question 1</h3>
-        <label> What kind of environment do you usually study in?</label>
-        <div class="options">
+<form id="roommate-form3">
+    <div class="section" id="study-habits-section">
+        <div class="question">
+            <h2>Question 1</h2>
+            <label>Where do you primarily study?</label>
+
             <div class="option">
-                <input type="radio" id="study-h-1" name="study-h" value="1" required>
-                <label for="study-h-1">I need complete silence</label>
+                <input type="radio" id="study-room-always" name="study-location" value="almost-always" required>
+                <label for="study-room-always">Almost always in my room</label> 
             </div>
             <div class="option">
-                <input type="radio" id="study-h-2" name="study-h" value="2">
-                <label for="study-h-2"> I can tolerate some whispering</label>
+                <input type="radio" id="study-room-mostly" name="study-location" value="mostly-room">
+                <label for="study-room-mostly">Mostly in my room</label>
             </div>
             <div class="option">
-                <input type="radio" id="study-h-3" name="study-h" value="3">
-                <label for="study-h-3">I typically study with friends but we keep it quiet most of the time</label>
+                <input type="radio" id="study-mix-library" name="study-location" value="mix-room-library">
+                <label for="study-mix-library">Mix of room and library/other spaces</label>
             </div>
             <div class="option">
-                <input type="radio" id="study-h-4" name="study-h" value="4">
-                <label for="study-h-4"> I can study with noise and in big groups</label>
+                <input type="radio" id="study-rarely-room" name="study-location" value="rarely-room">
+                <label for="study-rarely-room">Rarely in my room</label>
             </div>
-            <div class="option">
-                <input type="radio" id="study-h-5" name="study-h" value="5">
-                <label for="study-h-5"> It varies and depends on how much work I have</label>
+
+            <div class="importance">
+                <label>How important is this for your roommate match?</label>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" id="study-importance-low" name="study-location-importance" value="low" required>
+                        <label for="study-importance-low">Not important</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="study-importance-medium" name="study-location-importance" value="medium">
+                        <label for="study-importance-medium">Somewhat important</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="study-importance-high" name="study-location-importance" value="high">
+                        <label for="study-importance-high">Very important</label>
+                    </div>
+                </div>
             </div>
         </div>
-        <br>
-        <div class="importance">
-            <label> How important is this for your roommate match?</label>
+
+        <div class="question">
+            <h2>Question 2</h2>
+            <label>How do you feel about noise while studying?</label>
+
             <div class="options">
                 <div class="option">
-                    <input type="radio" id="study-imp-1" name="study-imp" value="1" required>
-                    <label for="study-imp-1"> Not important</label>
+                    <input type="radio" id="noise-silence" name="noise-preference" value="silence" required>
+                    <label for="noise-silence">Need complete silence</label>
                 </div>
                 <div class="option">
-                    <input type="radio" id="study-imp-2" name="study-imp" value="2">
-                    <label for="study-imp-2">Somewhat important</label>
+                    <input type="radio" id="noise-minimal" name="noise-preference" value="minimal-noise">
+                    <label for="noise-minimal">Minimal noise with headphones acceptable</label>
                 </div>
                 <div class="option">
-                    <input type="radio" id="study-imp-3" name="study-imp" value="3">
-                    <label for="study-imp-3">Very important</label>
+                    <input type="radio" id="noise-moderate" name="noise-preference" value="moderate-noise">
+                    <label for="noise-moderate">Moderate noise is fine</label>
+                </div>
+                <div class="option">
+                    <input type="radio" id="noise-any-level" name="noise-preference" value="any-noise">
+                    <label for="noise-any-level">Can study with any level of noise</label>
+                </div>
+            </div>
+
+            <div class="importance">
+                <label>How important is this for your roommate match?</label>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" id="noise-importance-low" name="noise-importance" value="low" required>
+                        <label for="noise-importance-low">Not important</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="noise-importance-medium" name="noise-importance" value="medium">
+                        <label for="noise-importance-medium">Somewhat important</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="noise-importance-high" name="noise-importance" value="high">
+                        <label for="noise-importance-high">Very important</label>
+                    </div>
                 </div>
             </div>
         </div>
-        <br>
+
+        <div class="question">
+            <h2>Question 3</h2>
+            <label>What's your intended major or area of study?</label>
+
+            <div class="option">
+                <select id="major-selection" name="intended-major" required>
+                    <option value="">Select one...</option>
+                    <option value="science">Science</option>
+                    <option value="engineering">Engineering</option>
+                    <option value="arts">Arts</option>
+                    <option value="business">Business</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+
+            <div class="importance">
+                <label>How important is it to match with someone in a similar field?</label>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" id="major-importance-low" name="major-importance" value="low" required>
+                        <label for="major-importance-low">Not important</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="major-importance-medium" name="major-importance" value="medium">
+                        <label for="major-importance-medium">Somewhat important</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="major-importance-high" name="major-importance" value="high">
+                        <label for="major-importance-high">Very important</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="nav-buttons">
             <button type="button" id="prev2">Previous</button>
-            <button type="button" id="next2">Next: Study Habbits</button>
-        </div>
-    </div>
-
-=======
-
-<div class="section" id="study-habits-section">
-
-    <div class="question">
-        <h3>Question 1</h3>
-        <label>Where do you primarily study?</label>
-
-        <div class="option">
-            <input type="radio" id="study-room-always" name="study-location" value="almost-always" required>
-            <label for="study-room-always">Almost always in my room</label> 
-        </div>
-        <div class="option">
-            <input type="radio" id="study-room-mostly" name="study-location" value="mostly-room">
-            <label for="study-room-mostly">Mostly in my room</label>
-        </div>
-        <div class="option">
-            <input type="radio" id="study-mix-library" name="study-location" value="mix-room-library">
-            <label for="study-mix-library">Mix of room and library/other spaces</label>
-        </div>
-        <div class="option">
-            <input type="radio" id="study-rarely-room" name="study-location" value="rarely-room">
-            <label for="study-rarely-room">Rarely in my room</label>
+            <button type="button" id="next2">Next</button>
         </div>
 
-        <div class="importance">
-            <label>How important is this for your roommate match?</label>
-            <div class="options">
-                <div class="option">
-                    <input type="radio" id="study-importance-low" name="study-location-importance" value="low" required>
-                    <label for="study-importance-low">Not important</label>
-                </div>
-                <div class="option">
-                    <input type="radio" id="study-importance-medium" name="study-location-importance" value="medium">
-                    <label for="study-importance-medium">Somewhat important</label>
-                </div>
-                <div class="option">
-                    <input type="radio" id="study-importance-high" name="study-location-importance" value="high">
-                    <label for="study-importance-high">Very important</label>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="question">
-        <h3>Question 2</h3>
-        <label>How do you feel about noise while studying?</label>
-
-        <div class="options">
-            <div class="option">
-                <input type="radio" id="noise-silence" name="noise-preference" value="silence" required>
-                <label for="noise-silence">Need complete silence</label>
-            </div>
-            <div class="option">
-                <input type="radio" id="noise-minimal" name="noise-preference" value="minimal-noise">
-                <label for="noise-minimal">Minimal noise with headphones acceptable</label>
-            </div>
-            <div class="option">
-                <input type="radio" id="noise-moderate" name="noise-preference" value="moderate-noise">
-                <label for="noise-moderate">Moderate noise is fine</label>
-            </div>
-            <div class="option">
-                <input type="radio" id="noise-any-level" name="noise-preference" value="any-noise">
-                <label for="noise-any-level">Can study with any level of noise</label>
-            </div>
-        </div>
-
-        <div class="importance">
-            <label>How important is this for your roommate match?</label>
-            <div class="options">
-                <div class="option">
-                    <input type="radio" id="noise-importance-low" name="noise-importance" value="low" required>
-                    <label for="noise-importance-low">Not important</label>
-                </div>
-                <div class="option">
-                    <input type="radio" id="noise-importance-medium" name="noise-importance" value="medium">
-                    <label for="noise-importance-medium">Somewhat important</label>
-                </div>
-                <div class="option">
-                    <input type="radio" id="noise-importance-high" name="noise-importance" value="high">
-                    <label for="noise-importance-high">Very important</label>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="question">
-        <h3>Question 3</h3>
-        <label>What's your intended major or area of study?</label>
-
-        <div class="option">
-            <select id="major-selection" name="intended-major" required>
-                <option value="">Select one...</option>
-                <option value="science">Science</option>
-                <option value="engineering">Engineering</option>
-                <option value="arts">Arts</option>
-                <option value="business">Business</option>
-                <option value="other">Other</option>
-            </select>
-        </div>
-
-        <div class="importance">
-            <label>How important is it to match with someone in a similar field?</label>
-            <div class="options">
-                <div class="option">
-                    <input type="radio" id="major-importance-low" name="major-importance" value="low" required>
-                    <label for="major-importance-low">Not important</label>
-                </div>
-                <div class="option">
-                    <input type="radio" id="major-importance-medium" name="major-importance" value="medium">
-                    <label for="major-importance-medium">Somewhat important</label>
-                </div>
-                <div class="option">
-                    <input type="radio" id="major-importance-high" name="major-importance" value="high">
-                    <label for="major-importance-high">Very important</label>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="nav-buttons">
-        <button type="button" id="prev2">Previous</button>
-        <button type="button" id="next2">Next</button>
-    </div>
-
+    <form>
 
 </div>
 </body>
