@@ -345,12 +345,12 @@
                 <label>Where do you primarily study?</label>
 
             <div class="option">
-                <input type="radio" id="social-imp-1" name="social-importance" value="1" required>
-                <label for="social-imp-1">Not important</label>
+                <input type="radio" id="study-imp-1" name="study-importance" value="1" required>
+                <label for="study-imp-1">Not important</label>
             </div>
             <div class="option">
-                <input type="radio" id="social-imp-2" name="social-importance" value="2">
-                <label for="social-imp-2">Somewhat important</label>
+                <input type="radio" id="study-imp-2" name="study-importance" value="2">
+                <label for="study-imp-2">Somewhat important</label>
             </div>
             <div class="option">
                 <input type="radio" id="study-mix-library" name="study-location" value="mix-room-library">
@@ -463,8 +463,67 @@
             </div>
 
             <!--- Social and Lifestyle Preferences -->
-            <div class ="question">
-                <label> </label>
+            <div class ="section hidden" id= "section4">
+                <form id="roommate-form4">
+                    <div class="section" id="social-lifestyle-section">
+                        <div class ="question">
+                            <h2>Question 1</h2>
+                            <label> Do you consider yourself introverted or extroverted?</label>
+                            <br/>
+            
+                            <div class="options">
+                                <div class="option">
+                                    <input type="radio" id="social-pref1" name="social-prefs" value="1" required>
+                                    <label for="social-pref1">Introverted</label>
+                                </div>
+                                <div class="option">
+                                    <input type="radio" id="social-pref2" name="social-prefs" value="2">
+                                    <label for="social-pref2">Extroverted</label>
+                                </div>
+                                <div class="option">
+                                    <input type="radio" id="social-pref3" name="social-prefs" value="3">
+                                    <label for="social-pref3"> Mainly extroverted but need my alone time every now and then</label>
+                                </div>
+                                <div class="option">
+                                    <input type="radio" id="social-pref4" name="social-prefs" value="4">
+                                    <label for="social-pref4">Mainly introverted but like to spend time with people every now and then</label>
+                                </div>
+                            </div>
+
+                        <div class="importance">
+                            <label>How important is this to match with your ideal roommate?</label>
+                            <br/>
+                            <div class="options">
+                                <div class ="option">
+                                    <input type="radio" id="social-imp-1" name="social-importance" value="1" required/>
+                                    <label for="social-imp-1">Not important</label>
+                                </div>
+                                <div class="option">
+                                    <input type="radio" id="social-imp-2" name="social-importance" value="2">
+                                    <label for="social-imp-2">Somewhat important</label>
+                                </div>
+                                <div class="option">
+                                    <input type="radio" id="social-imp-3" name="social-importance" value="3">
+                                    <label for="social-imp-3">Very important</label>
+                                </div>
+                            </div> 
+                        </div>
+
+                        <!--Question 2-->
+                        <div class="question">
+                            <h2>Question 2</h2>
+                            <label>How often do you go out?</label>
+                            <br/>
+                            <div class="options">
+                                <div class="option">
+                                    <input type="radio" id="going-out-1" name="going-out" value="1" required/>
+                                    <label for="going-out-1">I don't really go out</label>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </form>
             </div>
 
             <!--- Personal Boundaries-->
