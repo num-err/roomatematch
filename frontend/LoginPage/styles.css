@@ -54,7 +54,6 @@ body {
 .user-email:hover,
 .user-name:hover,
 .user-password:hover {
-    /* NEW */
     border-color: rgb(200, 133, 88);
 }
 .submit-button {
