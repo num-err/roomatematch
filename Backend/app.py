@@ -85,11 +85,6 @@ def _best_match_for(user_id: int):
 #  Front‑end routes
 @app.route('/')
 def index():
-    # Redirect root to the login page
-    return redirect(url_for('loginpage_root'))
-
-@app.route('/LoginPage/')
-def loginpage_root():
     return render_template('LoginPage/index.html')
 
 # Fallbacks for any other assets under /frontend
