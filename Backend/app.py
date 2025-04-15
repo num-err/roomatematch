@@ -7,11 +7,8 @@ from flask import (
 )
 from config import Config
 from models import User, db, Questionnaire
-<<<<<<< HEAD
 from gale_shapley import stable_matching
 #from seed import seed_data
-=======
->>>>>>> ef2f65571a1b0eb15a9703925e538e345bccb253
 
 #  Flask setup
 BASE_DIR      = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
@@ -28,7 +25,6 @@ print(f"[Flask] FRONTEND_DIR = {FRONTEND_DIR}")
 app.config.from_object(Config)
 db.init_app(app)
 
-
 #  Helper static serving
 def _serve_frontend_file(relative_path: str):
     """
@@ -42,7 +38,6 @@ def _serve_frontend_file(relative_path: str):
         return send_from_directory(FRONTEND_DIR, relative_path)
     print(f"[Flask] ✖  {abs_path} not found")
     abort(404)
-
 
 #  Simple matching Algo
 def _distance(a1: dict, a2: dict) -> int:
@@ -86,7 +81,6 @@ def _best_match_for(user_id: int):
     best_user  = User.query.get(best_row.user_id)
     return best_user
 
-
 #  Front‑end routes
 @app.route('/')
 def index():
@@ -105,7 +99,6 @@ def userinterface_files(filename):
 @app.route('/<path:filename>')
 def any_frontend_file(filename):
     return _serve_frontend_file(filename)
-
 
 #  Authentication API
 @app.route('/register', methods=['POST'])
@@ -128,8 +121,6 @@ def register():
     db.session.commit()
     return jsonify({'message': 'User registered successfully'}), 201
 
-<<<<<<< HEAD
-
 @app.route('/api/questionnaire', methods=['PUT'])
 def update_info():
     data = request.get_json()
@@ -138,17 +129,8 @@ def update_info():
     if not username:
         return jsonify({'error': 'User does not exist , register for acesst'}), 400
     
-    
-
     db.commit(user_name)
 
-    
-
-
-
-=======
-#Login API
->>>>>>> ef2f65571a1b0eb15a9703925e538e345bccb253
 @app.route('/login', methods=['POST'])
 def login():
     data     = request.get_json()
@@ -160,7 +142,6 @@ def login():
         return jsonify({'error': 'Invalid credentials'}), 400
 
     return jsonify({'message': 'Logged in successfully', 'user': user.as_dict()}), 200
-
 
 #  Questionnaire API – stores answers & returns a match
 @app.route('/api/questionnaire', methods=['POST'])
@@ -203,7 +184,6 @@ def submit_questionnaire():
     else:
         return jsonify({'message': 'Questionnaire saved – waiting for others'}), 200
 
-
 #  Dummy test route
 @app.route('/post_data', methods=['POST'])
 def post_data():
@@ -211,7 +191,6 @@ def post_data():
         data = request.get_json()
         return jsonify({'message': 'This is a POST request', 'data': data}), 201
     return jsonify({'error': 'Request must be JSON'}), 400
-
 
 #  Messaging endpoints
 @app.route('/messages', methods=['POST'])
@@ -225,18 +204,10 @@ def send_message():
         return jsonify({'error': 'Missing fields'}), 400
 
     message = Message(
-<<<<<<< HEAD
         sender_id = sender_id,
         receiver_id = receiver_id,
         content = content
-    ) 
-=======
-        sender_id=sender_id,
-        receiver_id=receiver_id,
-        content=content
     )
->>>>>>> ef2f65571a1b0eb15a9703925e538e345bccb253
-
     db.session.add(message)
     db.session.commit()
 
@@ -262,19 +233,10 @@ def get_messages():
         'timestamp': m.timestamp.isoformat()
     } for m in messages]), 200
 
-
-<<<<<<< HEAD
-
-
-=======
-#  Main entry
->>>>>>> ef2f65571a1b0eb15a9703925e538e345bccb253
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()
     app.run(debug=True)
-
-
 
 
 
