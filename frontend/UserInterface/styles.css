@@ -2,7 +2,7 @@
     border: 1px solid black;
     border-width: 1px;
     padding: 100px 100px 100px 100px;
-    background-image: linear-gradient(150deg, rgb(106, 133, 136), rgb(219, 213, 110));
+    background-image: linear-gradient(150deg, rgb(51, 235, 255), rgb(255, 255, 255));
     
 
 
@@ -19,7 +19,7 @@
     border-width: 1px;
     padding: 100px 100px 100px 100px;
     padding-left: 30%;
-    background-image: linear-gradient(150deg, rgb(106, 133, 136), rgb(219, 213, 110));
+    background-image: linear-gradient(150deg, rgb(248, 252, 255), rgb(110, 199, 219));
 
 }
 
