@@ -40,7 +40,6 @@ body {
 .user-classYear,
 .user-email,
 .user-password {
-    /* NEW */
     font-size: 10px;
     width: 50%;
     font-family: system-ui, sans-serif;
