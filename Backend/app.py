@@ -98,25 +98,24 @@ def any_frontend_file(filename):
 #  Authentication API
 @app.route('/register', methods=['POST'])
 def register():
-    data       = request.get_json()
-    username   = data.get('username')
-    email      = data.get('email')
-    password   = data.get('password')
-    classyear  = data.get('classyear')
+    username = request.form['username']
+    classyear = request.form['classyear']
+    email = request.form['email']
+    password = request.form['password']
 
     if User.query.filter(
         (User.username == username) | (User.email == email)
     ).first():
-        return jsonify({'error': 'User with that username or email already exists'}), 400
+        return jsonify({'error': 'User with that username or email already exists'})
 
     user = User(username=username, email=email, classyear=classyear)
     user.set_password(password)
 
     db.session.add(user)
     db.session.commit()
-    return jsonify({'message': 'User registered successfully'}), 201
+    return jsonify({'message': 'User registered successfully'})
 
-@app.route('/api/questionnaire', methods=['PUT'])
+@app.route('/api/profileUpdate', methods=['POST'])
 def update_info():
     data = request.get_json()
     username   = data.get('username')
@@ -128,15 +127,15 @@ def update_info():
 
 @app.route('/login', methods=['POST'])
 def login():
-    data     = request.get_json()
-    username = data.get('username')
-    password = data.get('password')
+    username = request.form['username']
+    password = request.form['password']
 
     user = User.query.filter_by(username=username).first()
     if user is None or not user.check_password(password):
-        return jsonify({'error': 'Invalid credentials'}), 400
+        return jsonify({'error': 'Invalid credentials'})
 
-    return jsonify({'message': 'Logged in successfully', 'user': user.as_dict()}), 200
+    return jsonify({'message': 'Logged in successfully', 'user': user.as_dict()})
+    # For testing purposes: return '{"user":"' + username + '"}'
 
 #  Questionnaire API – stores answers & returns a match
 @app.route('/api/questionnaire', methods=['POST'])
@@ -179,16 +178,8 @@ def submit_questionnaire():
     else:
         return jsonify({'message': 'Questionnaire saved – waiting for others'}), 200
 
-#  Dummy test route
-@app.route('/post_data', methods=['POST'])
-def post_data():
-    if request.is_json:
-        data = request.get_json()
-        return jsonify({'message': 'This is a POST request', 'data': data}), 201
-    return jsonify({'error': 'Request must be JSON'}), 400
-
 #  Messaging endpoints
-@app.route('/messages', methods=['POST'])
+@app.route('/sendMessage', methods=['POST'])
 def send_message():
     data = request.get_json()
     sender_id   = data.get('sender_id')
@@ -208,7 +199,7 @@ def send_message():
 
     return jsonify({'message': 'Message sent successfully'}), 201
 
-@app.route('/messages', methods=['GET'])
+@app.route('/getMessage', methods=['GET'])
 def get_messages():
     user1 = request.args.get('user1', type=int)
     user2 = request.args.get('user2', type=int)
@@ -227,6 +218,14 @@ def get_messages():
         'content': m.content,
         'timestamp': m.timestamp.isoformat()
     } for m in messages]), 200
+
+#  Dummy test route
+@app.route('/post_data', methods=['POST'])
+def post_data():
+    if request.is_json:
+        data = request.get_json()
+        return jsonify({'message': 'This is a POST request', 'data': data}), 201
+    return jsonify({'error': 'Request must be JSON'}), 400
 
 if __name__ == '__main__':
     with app.app_context():

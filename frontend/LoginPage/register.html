@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="utf-8" />
-        <title>Login to Roommate Match</title>
+        <title>Register to Roommate Match</title>
         <!-- Use url_for so the correct static path is injected -->
         <link
             rel="stylesheet"
@@ -11,12 +11,12 @@
     </head>
     <body>
         <h1 id="top-header" class="bordered-content">
-            Login to My Roommate Match
+            Register to My Roommate Match
         </h1>
 
         <div class="login-container">
             <div id="login-bar" class="login-input">
-                <h2>Login</h2>
+                <h2>Register</h2>
 
                 <div>
                     <input
@@ -24,6 +24,26 @@
                         id="user-name"
                         class="user-name"
                         placeholder="Enter your username"
+                    />
+                </div>
+                <br />
+
+                <div>
+                    <input
+                        type="text"
+                        id="user-classYear"
+                        class="user-classYear"
+                        placeholder="Class year"
+                    />
+                </div>
+                <br />
+
+                <div>
+                    <input
+                        type="text"
+                        id="user-email"
+                        class="user-email"
+                        placeholder="Swarthmore Email..."
                     />
                 </div>
                 <br />
@@ -56,8 +76,9 @@
                 const userName = document
                     .getElementById("user-name")
                     .value.trim();
-                const userPassword =
-                    document.getElementById("user-password").value;
+                const userClassyear = document.getElementById("user-classYear").value;
+                const userEmail = document.getElementById("user-email").value;
+                const userPassword = document.getElementById("user-password").value;
 
                 if (!userName || !userPassword) {
                     alert("Please enter both username and password.");
@@ -70,20 +91,16 @@
                         console.log("Response Received: " + this.responseText);
                         let data = JSON.parse(this.responseText);
                         if("error" in data) {
-                            alert("Login Failed. Please try again!");
+                            alert("Registration Failed. Please try again!");
                         } else {
-                            alert("Login successful!");
-                            localStorage.setItem(
-                                "user",
-                                JSON.stringify(data.user)
-                            );
-                            window.location.href = "/UserInterface/questionaire.html";
+                            alert("Registration successful!");
+                            window.location.href = "/LoginPage/index.html";
                         }
                     }
                 };
-                xhttp.open("POST", "/login", true);
+                xhttp.open("POST", "/register", true);
                 xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-                xhttp.send("username=" + userName + "&password=" + userPassword);
+                xhttp.send("username=" + userName + "&classyear=" + userClassyear + "&email=" + userEmail + "&password=" + userPassword);
                 console.log("Request Sent");
 
 
