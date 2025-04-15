@@ -123,6 +123,7 @@ def register():
     db.session.commit()
     return jsonify({'message': 'User registered successfully'}), 201
 
+#Login API
 @app.route('/login', methods=['POST'])
 def login():
     data     = request.get_json()
