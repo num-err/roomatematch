@@ -8,6 +8,7 @@ from flask import (
 from config import Config
 from models import User, db, Questionnaire
 from gale_shapley import stable_matching
+#from seed import seed_data
 
 #  Flask setup
 BASE_DIR      = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
@@ -83,6 +84,22 @@ def register():
     db.session.add(user)
     db.session.commit()
     return jsonify({'message': 'User registered successfully'}), 201
+
+
+@app.route('/api/questionnaire', methods=['PUT'])
+def update_info():
+    data = request.get_json()
+    username   = data.get('username')
+
+    if not username:
+        return jsonify({'error': 'User does not exist , register for acesst'}), 400
+    
+    
+
+    db.commit(user_name)
+
+    
+
 
 
 @app.route('/login', methods=['POST'])
@@ -234,8 +251,8 @@ def send_message():
         return jsonify({'error': 'Missing fields'}), 400
 
     message = Message(
-        sender_id = sender_id
-        receiver_id = receiver_id
+        sender_id = sender_id,
+        receiver_id = receiver_id,
         content = content
     ) 
 
@@ -268,6 +285,7 @@ def get_messages():
         'content': m.content,
         'timestamp': m.timestamp.isoformat()
     } for m in messages]), 200
+
 
 
 
