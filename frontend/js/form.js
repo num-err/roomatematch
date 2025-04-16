@@ -117,7 +117,7 @@ function submitFormData(userData, userId) {
             user_id: user.id
         })
     })
-    .then(response => response.text())
+    .then(response => response.json())
     .then(data => {
         console.log('Success:', data);
         alert('Form submitted successfully!');
