@@ -3,30 +3,44 @@
 //we need to handle the logic for the form submitting
 
 document.addEventListener("DOMContentLoaded", function() {
-
     const nextButtons = document.querySelectorAll('[id^="next"]');
     const prevButtons = document.querySelectorAll('[id^="prev"]');
+    const sections = document.querySelectorAll('.section');
+
+    // Function to show a specific section
+    function showSection(sectionId) {
+        sections.forEach(section => {
+            if (section.id === sectionId) {
+                section.classList.remove('hidden');
+            } else {
+                section.classList.add('hidden');
+            }
+        });
+    }
 
     nextButtons.forEach(button => {
         button.addEventListener('click', function() {
-            const curentSection = this.closest('.section');
-            const nextSection = curentSection.nextElementSibling;
-
+            const currentSection = this.closest('.section');
+            const currentSectionId = currentSection.id;
+            const currentSectionNumber = parseInt(currentSectionId.replace('section', ''));
+            const nextSectionId = `section${currentSectionNumber + 1}`;
+            
             if (validateSection(currentSection)) {
-                curentSection.classList.add('hidden');
-                nextSection.classList.remove('hidden'); }
+                showSection(nextSectionId);
+            }
         });
-        });
+    });
 
     prevButtons.forEach(button => {
         button.addEventListener('click', function() {
             const currentSection = this.closest('.section');
-            const prevSection = currentSection.previousElementSibling;
-
-            currentSection.classList.add('hidden');
-            prevSection.classList.remove('hidden');
+            const currentSectionId = currentSection.id;
+            const currentSectionNumber = parseInt(currentSectionId.replace('section', ''));
+            const prevSectionId = `section${currentSectionNumber - 1}`;
+            
+            showSection(prevSectionId);
         });
-        });
+    });
     
     // this is the form submission
     const form = document.querySelector('form');
@@ -37,54 +51,54 @@ document.addEventListener("DOMContentLoaded", function() {
             const formData = new FormData(form);
             const userData = Object.fromEntries(formData.entries());
             alert('Form submitted successfully!');
-            submitFormData( userData);
+            submitFormData(userData);
         } else {
             alert('Please fill out all required fields');
         }
     });
 });
+
 // check that all the required fields have been entered in 
 // the current section before moving to the next section
-function validateSection(section){
-
+function validateSection(section) {
     let valid = true;
     const requiredFields = section.querySelectorAll('[required]');
 
     requiredFields.forEach(field => {
         if (!field.value) {
             valid = false;
-            field.classList.add('error');} // Checkpoint: we will need to style this in css
-            // I would say border: 1px solid red;
-            
-        else{
-            field.classList.remove('error');}
-        });
-        
-        if (!valid) {
-            alert('Please fill out all required fields'); // we alert the user
+            field.classList.add('error');
+        } else {
+            field.classList.remove('error');
         }
+    });
+        
+    if (!valid) {
+        alert('Please fill out all required fields');
+    }
     return valid;
 }
-function validateForm(){
 
+function validateForm() {
     let valid = true;
     const requiredFields = document.querySelectorAll('[required]');
 
     requiredFields.forEach(field => {
         if (!field.value) {
             valid = false;
-            field.classList.add('error');}
-        
-        else{
-            field.classList.remove('error');}
-        });
+            field.classList.add('error');
+        } else {
+            field.classList.remove('error');
+        }
+    });
     
     return valid;
 }
+
 // this is the function that will handle the form submission
 // this function will send the data to the server
 // this function will be called when we click the submit button 
-function submitFormData(userData){
+function submitFormData(userData) {
     fetch('/submit', {
         method: 'POST',
         headers: {
@@ -95,6 +109,6 @@ function submitFormData(userData){
     .then(response => response.text())
     .then(data => {
         console.log('Success:', data);
-        alert('Form submitted successfully!'); });
-
+        alert('Form submitted successfully!');
+    });
 }
