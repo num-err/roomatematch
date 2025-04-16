@@ -1,0 +1,203 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>Roommate Questionnaire - Sleep Preferences</title>
+        <link rel="stylesheet" href="styles2.css">
+        <script src="../js/form.js" defer></script>
+        <style>
+            .modal {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0,0,0,0.5);
+                z-index: 1000;
+            }
+            .modal-content {
+                position: relative;
+                background-color: #fefefe;
+                margin: 15% auto;
+                padding: 20px;
+                border: 1px solid #888;
+                width: 80%;
+                max-width: 500px;
+                border-radius: 10px;
+                text-align: center;
+            }
+            .loading {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0,0,0,0.5);
+                z-index: 1000;
+            }
+            .loading-content {
+                position: relative;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                text-align: center;
+                color: white;
+            }
+        </style>
+    </head>
+
+    <body>
+        <!-- Loading Indicator -->
+        <div class="loading" id="loadingIndicator">
+            <div class="loading-content">
+                <h2>Submitting your questionnaire...</h2>
+                <div class="spinner"></div>
+            </div>
+        </div>
+
+        <!-- Success Modal -->
+        <div class="modal" id="successModal">
+            <div class="modal-content">
+                <h2>Thank You! 🎉</h2>
+                <p>Your questionnaire has been successfully submitted!</p>
+                <button onclick="closeModal()">Close</button>
+            </div>
+        </div>
+
+        <form id="roommate-form">
+            <div class="section" id="section1">
+                <h1>Sleep Preferences</h1>
+                
+                <!-- Question 1 -->
+                <h2>Question 1</h2>
+                <div class="question">
+                    <label for="bedtime">What time do you typically go to bed on weeknights?</label>
+                    <br/>
+                    <select id="bedtime" name="bedtime" required>
+                        <option value="">Select one...</option>
+                        <option value="Before 10 PM">Before 10 PM</option>
+                        <option value="10 PM ‑ Midnight">10 PM ‑ Midnight</option>
+                        <option value="Midnight ‑ 2 AM">Midnight ‑ 2 AM</option>
+                        <option value="After 2 AM">After 2 AM</option>
+                    </select>
+                </div>
+                <br/>
+
+                <div class="importance">
+                    <label>How Important is this for your roommate match</label>
+                    <br/>
+                    <div class="options">
+                        <div class="option">
+                            <input type="radio" id="bedtime-imp-1" name="bedtime-importance" value="1" required/>
+                            <label for="bedtime-imp-1">Not important</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="bedtime-imp-2" name="bedtime-importance" value="2"/>
+                            <label for="bedtime-imp-2">Somewhat important</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="bedtime-imp-3" name="bedtime-importance" value="3"/>
+                            <label for="bedtime-imp-3">Very important</label>
+                        </div>
+                    </div>
+                </div>
+                <br/>
+
+                <!-- Question 2 -->
+                <h2>Question 2</h2>
+                <div class="question">
+                    <label>How do you feel about your roommate using lights/screens while you're sleeping?</label>
+                    <br/>
+                    <div class="options">
+                        <div class="option">
+                            <input type="radio" id="lights-1" name="lights" value="1" required/>
+                            <label for="lights-1">Not acceptable at all</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="lights-2" name="lights" value="2"/>
+                            <label for="lights-2">Only with headphones &amp; dim screens</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="lights-3" name="lights" value="3"/>
+                            <label for="lights-3">Fine as long as it's not too bright/loud</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="lights-4" name="lights" value="4"/>
+                            <label for="lights-4">No problem at all</label>
+                        </div>
+                    </div>
+                </div>
+                <br/>
+                
+                <div class="importance">
+                    <label>How important is this for your roommate match</label>
+                    <br/>
+                    <div class="options">
+                        <div class="option">
+                            <input type="radio" id="lights-imp-1" name="lights-importance" value="1" required/>
+                            <label for="lights-imp-1">Not important</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="lights-imp-2" name="lights-importance" value="2"/>
+                            <label for="lights-imp-2">Somewhat important</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="lights-imp-3" name="lights-importance" value="3"/>
+                            <label for="lights-imp-3">Very important</label>
+                        </div>
+                    </div>
+                </div>
+                <br/>
+
+                <!-- Question 3 -->
+                <div class="question">
+                    <label>3. Are you comfortable with overnight guests?</label><br>
+                    <div class="options">
+                        <div class="option">
+                            <input type="radio" id="guests-1" name="guests" value="1" required>
+                            <label for="guests-1">No overnight guests</label><br>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="guests-2" name="guests" value="2">
+                            <label for="guests-2">Only with advanced notice</label><br>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="guests-3" name="guests" value="3">
+                            <label for="guests-3">Occasionally without notice</label><br>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="guests-4" name="guests" value="4">
+                            <label for="guests-4">Anytime is Cool</label><br>
+                        </div>
+                    </div>
+                </div>
+                <br/>
+
+                <div class="importance">
+                    <label>How Important is this for your roommate match</label><br>
+                    <div class="options">
+                        <div class="option">
+                            <input type="radio" id="guests-imp-1" name="guests-importance" value="1" required>
+                            <label for="guests-imp-1">Not important</label><br>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="guests-imp-2" name="guests-importance" value="2">
+                            <label for="guests-imp-2">Somewhat important</label><br>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="guests-imp-3" name="guests-importance" value="3">
+                            <label for="guests-imp-3">Very important</label><br>
+                        </div>
+                    </div>
+                </div>
+                <br/>
+
+                <div class="nav-buttons">
+                    <button type="submit" id="submit">Submit Questionnaire</button>
+                </div>
+            </div>
+        </form>
+    </body>
+</html> 
