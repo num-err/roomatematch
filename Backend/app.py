@@ -110,7 +110,7 @@ def register():
         if User.query.filter(
             (User.username == username) | (User.email == email)
         ).first():
-            return jsonify({'error': 'User with that username or email already exists'}), 400
+            return jsonify({'error': 'User with that username or email already exists'})
 
         user = User(username=username, email=email, classyear=classyear)
         user.set_password(password)
@@ -122,7 +122,7 @@ def register():
             'redirect': '/login'
         }), 200
     except Exception as e:
-        return jsonify({'error': str(e)}), 500
+        return jsonify({'error': str(e)})
 
 @app.route('/login', methods=['POST'])
 def login():
@@ -132,7 +132,7 @@ def login():
 
         user = User.query.filter_by(username=username).first()
         if user is None or not user.check_password(password):
-            return jsonify({'error': 'Invalid credentials'}), 401
+            return jsonify({'error': 'Invalid credentials'})
 
         return jsonify({
             'message': 'Logged in successfully',
@@ -140,7 +140,7 @@ def login():
             'redirect': '/questionnaire'
         }), 200
     except Exception as e:
-        return jsonify({'error': str(e)}), 500
+        return jsonify({'error': str(e)})
 
 #  Questionnaire section routes
 @app.route('/questionnaire/section1', methods=['GET'])
@@ -165,7 +165,7 @@ def submit_questionnaire():
     try:
         # Get user_id from form data
         user_id = request.form['user_id']
-        
+
         # Get all questionnaire answers from form data
         questionnaire = Questionnaire(
             user_id=user_id,
@@ -175,7 +175,7 @@ def submit_questionnaire():
             lights_importance=request.form['lights_importance'],
             guests=request.form['guests'],
             guests_importance=request.form['guests_importance'],
-            
+
             clean = request.form['clean'],
             clean_importance= request.form['clean_importance'],
             mess= request.form['mess'],
@@ -196,8 +196,8 @@ def submit_questionnaire():
             going_out_importance = request.form['going_out_importance'],
             people_over_preference = request.form['people_over_preference'],
             people_over_importance = request.form['people_over_importance'],
-            
-            
+
+
         )
 
         # Check if user already has a questionnaire
