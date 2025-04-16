@@ -7,22 +7,26 @@ document.addEventListener("DOMContentLoaded", function() {
     const prevButtons = document.querySelectorAll('[id^="prev"]');
     const sections = document.querySelectorAll('.section');
 
-    // Hide all sections except the first one
-    sections.forEach((section, index) => {
-        if (index !== 0) {
-            section.classList.add('hidden');
-        }
-    });
+    // Function to show a specific section
+    function showSection(sectionId) {
+        sections.forEach(section => {
+            if (section.id === sectionId) {
+                section.classList.remove('hidden');
+            } else {
+                section.classList.add('hidden');
+            }
+        });
+    }
 
     nextButtons.forEach(button => {
         button.addEventListener('click', function() {
             const currentSection = this.closest('.section');
-            const currentIndex = Array.from(sections).indexOf(currentSection);
-            const nextSection = sections[currentIndex + 1];
-
-            if (validateSection(currentSection) && nextSection) {
-                currentSection.classList.add('hidden');
-                nextSection.classList.remove('hidden');
+            const currentSectionId = currentSection.id;
+            const currentSectionNumber = parseInt(currentSectionId.replace('section', ''));
+            const nextSectionId = `section${currentSectionNumber + 1}`;
+            
+            if (validateSection(currentSection)) {
+                showSection(nextSectionId);
             }
         });
     });
@@ -30,32 +34,32 @@ document.addEventListener("DOMContentLoaded", function() {
     prevButtons.forEach(button => {
         button.addEventListener('click', function() {
             const currentSection = this.closest('.section');
-            const currentIndex = Array.from(sections).indexOf(currentSection);
-            const prevSection = sections[currentIndex - 1];
-
-            if (prevSection) {
-                currentSection.classList.add('hidden');
-                prevSection.classList.remove('hidden');
-            }
+            const currentSectionId = currentSection.id;
+            const currentSectionNumber = parseInt(currentSectionId.replace('section', ''));
+            const prevSectionId = `section${currentSectionNumber - 1}`;
+            
+            showSection(prevSectionId);
         });
     });
     
-    // Handle form submission
-    const forms = document.querySelectorAll('form');
-    forms.forEach(form => {
-        form.addEventListener('submit', function(event) {
-            event.preventDefault();
-            if (validateForm()) {
-                const formData = new FormData(form);
-                const userData = Object.fromEntries(formData.entries());
-                submitFormData(userData);
-            } else {
-                alert('Please fill out all required fields');
-            }
-        });
+    // this is the form submission
+    const form = document.querySelector('form');
+    form.addEventListener('submit', function(event) {
+        event.preventDefault();
+        if (validateForm()) {
+            // here we can submit the form(QUESTION: do we need to convert it to JSON?)
+            const formData = new FormData(form);
+            const userData = Object.fromEntries(formData.entries());
+            alert('Form submitted successfully!');
+            submitFormData(userData);
+        } else {
+            alert('Please fill out all required fields');
+        }
     });
 });
 
+// check that all the required fields have been entered in 
+// the current section before moving to the next section
 function validateSection(section) {
     let valid = true;
     const requiredFields = section.querySelectorAll('[required]');
@@ -68,7 +72,7 @@ function validateSection(section) {
             field.classList.remove('error');
         }
     });
-    
+        
     if (!valid) {
         alert('Please fill out all required fields');
     }
@@ -91,18 +95,11 @@ function validateForm() {
     return valid;
 }
 
+// this is the function that will handle the form submission
+// this function will send the data to the server
+// this function will be called when we click the submit button 
 function submitFormData(userData) {
-    // Combine all form data
-    const allForms = document.querySelectorAll('form');
-    const combinedData = {};
-    
-    allForms.forEach(form => {
-        const formData = new FormData(form);
-        Object.assign(combinedData, Object.fromEntries(formData.entries()));
-    });
-
-    // Send to server
-    fetch('/api/questionnaire', {
+    fetch('/submit', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -114,17 +111,7 @@ function submitFormData(userData) {
     })
     .then(response => response.json())
     .then(data => {
-        if (data.error) {
-            alert('Submission failed: ' + data.error);
-        } else {
-            alert('Questionnaire submitted successfully!');
-            if (data.match) {
-                alert('We found a match for you!');
-            }
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        alert('Failed to submit questionnaire. Please try again.');
+        console.log('Success:', data);
+        alert('Form submitted successfully!');
     });
 }
