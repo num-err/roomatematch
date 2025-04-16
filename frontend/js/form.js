@@ -98,13 +98,24 @@ function validateForm() {
 // this is the function that will handle the form submission
 // this function will send the data to the server
 // this function will be called when we click the submit button 
-function submitFormData(userData) {
-    fetch('/submit', {
+function submitFormData(userData, userId) {
+    console.log(userData, userId);
+
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (!user || !user.id) {
+        alert('Please login to submit the form');
+        return;
+    }
+
+    fetch('/api/questionnaire', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(userData)
+        body: JSON.stringify({
+            answers: userData,
+            user_id: user.id
+        })
     })
     .then(response => response.text())
     .then(data => {
