@@ -3,98 +3,128 @@
 //we need to handle the logic for the form submitting
 
 document.addEventListener("DOMContentLoaded", function() {
-
     const nextButtons = document.querySelectorAll('[id^="next"]');
     const prevButtons = document.querySelectorAll('[id^="prev"]');
+    const sections = document.querySelectorAll('.section');
+
+    // Hide all sections except the first one
+    sections.forEach((section, index) => {
+        if (index !== 0) {
+            section.classList.add('hidden');
+        }
+    });
 
     nextButtons.forEach(button => {
         button.addEventListener('click', function() {
-            const curentSection = this.closest('.section');
-            const nextSection = curentSection.nextElementSibling;
+            const currentSection = this.closest('.section');
+            const currentIndex = Array.from(sections).indexOf(currentSection);
+            const nextSection = sections[currentIndex + 1];
 
-            if (validateSection(currentSection)) {
-                curentSection.classList.add('hidden');
-                nextSection.classList.remove('hidden'); }
+            if (validateSection(currentSection) && nextSection) {
+                currentSection.classList.add('hidden');
+                nextSection.classList.remove('hidden');
+            }
         });
-        });
+    });
 
     prevButtons.forEach(button => {
         button.addEventListener('click', function() {
             const currentSection = this.closest('.section');
-            const prevSection = currentSection.previousElementSibling;
+            const currentIndex = Array.from(sections).indexOf(currentSection);
+            const prevSection = sections[currentIndex - 1];
 
-            currentSection.classList.add('hidden');
-            prevSection.classList.remove('hidden');
+            if (prevSection) {
+                currentSection.classList.add('hidden');
+                prevSection.classList.remove('hidden');
+            }
         });
-        });
+    });
     
-    // this is the form submission
-    const form = document.querySelector('form');
-    form.addEventListener('submit', function(event) {
-        event.preventDefault();
-        if (validateForm()) {
-            // here we can submit the form(QUESTION: do we need to convert it to JSON?)
-            const formData = new FormData(form);
-            const userData = Object.fromEntries(formData.entries());
-            alert('Form submitted successfully!');
-            submitFormData( userData);
-        } else {
-            alert('Please fill out all required fields');
-        }
+    // Handle form submission
+    const forms = document.querySelectorAll('form');
+    forms.forEach(form => {
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+            if (validateForm()) {
+                const formData = new FormData(form);
+                const userData = Object.fromEntries(formData.entries());
+                submitFormData(userData);
+            } else {
+                alert('Please fill out all required fields');
+            }
+        });
     });
 });
-// check that all the required fields have been entered in 
-// the current section before moving to the next section
-function validateSection(section){
 
+function validateSection(section) {
     let valid = true;
     const requiredFields = section.querySelectorAll('[required]');
 
     requiredFields.forEach(field => {
         if (!field.value) {
             valid = false;
-            field.classList.add('error');} // Checkpoint: we will need to style this in css
-            // I would say border: 1px solid red;
-            
-        else{
-            field.classList.remove('error');}
-        });
-        
-        if (!valid) {
-            alert('Please fill out all required fields'); // we alert the user
+            field.classList.add('error');
+        } else {
+            field.classList.remove('error');
         }
+    });
+    
+    if (!valid) {
+        alert('Please fill out all required fields');
+    }
     return valid;
 }
-function validateForm(){
 
+function validateForm() {
     let valid = true;
     const requiredFields = document.querySelectorAll('[required]');
 
     requiredFields.forEach(field => {
         if (!field.value) {
             valid = false;
-            field.classList.add('error');}
-        
-        else{
-            field.classList.remove('error');}
-        });
+            field.classList.add('error');
+        } else {
+            field.classList.remove('error');
+        }
+    });
     
     return valid;
 }
-// this is the function that will handle the form submission
-// this function will send the data to the server
-// this function will be called when we click the submit button 
-function submitFormData(userData){
-    fetch('/submit', {
+
+function submitFormData(userData) {
+    // Combine all form data
+    const allForms = document.querySelectorAll('form');
+    const combinedData = {};
+    
+    allForms.forEach(form => {
+        const formData = new FormData(form);
+        Object.assign(combinedData, Object.fromEntries(formData.entries()));
+    });
+
+    // Send to server
+    fetch('/api/questionnaire', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(userData)
+        body: JSON.stringify({
+            user_id: 1, // TODO: Get actual user ID
+            answers: combinedData
+        })
     })
-    .then(response => response.text())
+    .then(response => response.json())
     .then(data => {
-        console.log('Success:', data);
-        alert('Form submitted successfully!'); });
-
+        if (data.error) {
+            alert('Submission failed: ' + data.error);
+        } else {
+            alert('Questionnaire submitted successfully!');
+            if (data.match) {
+                alert('We found a match for you!');
+            }
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Failed to submit questionnaire. Please try again.');
+    });
 }
