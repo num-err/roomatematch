@@ -18,7 +18,7 @@ app = Flask(
     __name__,
     template_folder=FRONTEND_DIR,   # where Jinja2 looks for *.html
     static_folder=FRONTEND_DIR,     # where Flask serves CSS/JS/img
-    static_url_path='/'             # “/LoginPage/styles.css”, etc.
+    static_url_path='/'             # "LoginPage/styles.css", etc.
 )
 print(f"[Flask] FRONTEND_DIR = {FRONTEND_DIR}")
 
@@ -84,99 +84,123 @@ def _best_match_for(user_id: int):
 #  Front‑end routes
 @app.route('/')
 def index():
-    return render_template('LoginPage/index.html')
+    return _serve_frontend_file('LoginPage/register.html')
 
-# Fallbacks for any other assets under /frontend
-@app.route('/UserInterface/<path:filename>')
-def userinterface_files(filename):
-    return _serve_frontend_file(os.path.join('UserInterface', filename))
+@app.route('/register')
+def serve_register():
+    return _serve_frontend_file('LoginPage/register.html')
 
-@app.route('/<path:filename>')
-def any_frontend_file(filename):
-    return _serve_frontend_file(filename)
+@app.route('/login')
+def serve_login():
+    return _serve_frontend_file('LoginPage/index.html')
+
+@app.route('/questionnaire')
+def serve_questionnaire():
+    return _serve_frontend_file('UserInterface/question.html')
 
 #  Authentication API
 @app.route('/register', methods=['POST'])
 def register():
-    username = request.form['username']
-    classyear = request.form['classyear']
-    email = request.form['email']
-    password = request.form['password']
+    try:
+        username = request.form['username']
+        classyear = request.form['classyear']
+        email = request.form['email']
+        password = request.form['password']
 
-    if User.query.filter(
-        (User.username == username) | (User.email == email)
-    ).first():
-        return jsonify({'error': 'User with that username or email already exists'})
+        if User.query.filter(
+            (User.username == username) | (User.email == email)
+        ).first():
+            return jsonify({'error': 'User with that username or email already exists'}), 400
 
-    user = User(username=username, email=email, classyear=classyear)
-    user.set_password(password)
+        user = User(username=username, email=email, classyear=classyear)
+        user.set_password(password)
 
-    db.session.add(user)
-    db.session.commit()
-    return jsonify({'message': 'User registered successfully'})
-
-@app.route('/api/profileUpdate', methods=['POST'])
-def update_info():
-    data = request.get_json()
-    username   = data.get('username')
-
-    if not username:
-        return jsonify({'error': 'User does not exist , register for acesst'}), 400
-    
-    db.commit(user_name)
+        db.session.add(user)
+        db.session.commit()
+        return jsonify({
+            'message': 'User registered successfully',
+            'redirect': '/login'
+        }), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 @app.route('/login', methods=['POST'])
 def login():
-    username = request.form['username']
-    password = request.form['password']
+    try:
+        username = request.form['username']
+        password = request.form['password']
 
-    user = User.query.filter_by(username=username).first()
-    if user is None or not user.check_password(password):
-        return jsonify({'error': 'Invalid credentials'})
+        user = User.query.filter_by(username=username).first()
+        if user is None or not user.check_password(password):
+            return jsonify({'error': 'Invalid credentials'}), 401
 
-    return jsonify({'message': 'Logged in successfully', 'user': user.as_dict()})
-    # For testing purposes: return '{"user":"' + username + '"}'
+        return jsonify({
+            'message': 'Logged in successfully',
+            'user': user.as_dict(),
+            'redirect': '/questionnaire'
+        }), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
-#  Questionnaire API – stores answers & returns a match
+#  Questionnaire section routes
+@app.route('/questionnaire/section1', methods=['GET'])
+def questionnaire_section1():
+    return _serve_frontend_file('UserInterface/questionaire.html')
+
+@app.route('/questionnaire/section2', methods=['GET'])
+def questionnaire_section2():
+    return _serve_frontend_file('UserInterface/questionaire.html')
+
+@app.route('/questionnaire/section3', methods=['GET'])
+def questionnaire_section3():
+    return _serve_frontend_file('UserInterface/questionaire.html')
+
+@app.route('/questionnaire/section4', methods=['GET'])
+def questionnaire_section4():
+    return _serve_frontend_file('UserInterface/questionaire.html')
+
+# Update the questionnaire submission endpoint
 @app.route('/api/questionnaire', methods=['POST'])
 def submit_questionnaire():
-    """
-    Expected JSON:
-    {
-        "user_id": <int>,
-        "answers": { ... form field -> value ... }
-    }
-    Saves/updates the questionnaire and returns the closest match (if any).
-    """
-    # Parse JSON
-    data    = request.get_json(silent=True) or {}
-    uid     = data.get('user_id')
-    answers = data.get('answers')
+    try:
+        # Get user_id from form data
+        user_id = request.form['user_id']
+        
+        # Get all questionnaire answers from form data
+        questionnaire = Questionnaire(
+            user_id=user_id,
+            bedtime=request.form['bedtime'],
+            bedtime_importance=request.form['bedtime_importance'],
+            lights=request.form['lights'],
+            lights_importance=request.form['lights_importance'],
+            guests=request.form['guests'],
+            guests_importance=request.form['guests_importance'],
+            personality_type=request.form['personality_type'],
+            personality_importance=request.form['personality_importance'],
+            going_out_frequency=request.form['going_out_frequency'],
+            going_out_importance=request.form['going_out_importance'],
+            people_over_preference=request.form['people_over_preference'],
+            people_over_importance=request.form['people_over_importance'],
+            roommate_going_out_preference=request.form['roommate_going_out_preference']
+        )
 
-    # Validate required fields
-    if not uid or not answers:
-        return jsonify({'error': 'user_id and answers required'}), 400
+        # Check if user already has a questionnaire
+        existing_questionnaire = Questionnaire.query.filter_by(user_id=user_id).first()
+        if existing_questionnaire:
+            # Update existing questionnaire
+            for key, value in request.form.items():
+                if hasattr(existing_questionnaire, key):
+                    setattr(existing_questionnaire, key, value)
+            db.session.commit()
+            return jsonify({'message': 'Questionnaire updated successfully'}), 200
+        else:
+            # Create new questionnaire
+            db.session.add(questionnaire)
+            db.session.commit()
+            return jsonify({'message': 'Questionnaire submitted successfully'}), 200
 
-    # update existing questionnaire row
-    q = Questionnaire.query.filter_by(user_id=uid).first()
-    if q:
-        q.answers   = answers
-        q.timestamp = datetime.utcnow()
-    else:
-        # creating new questionnaire row if it didn't exist
-        q = Questionnaire(user_id=uid, answers=answers)
-        db.session.add(q)
-    db.session.commit()
-
-    # Finds best match if it's possible to do so
-    partner = _best_match_for(uid)
-    if partner:
-        return jsonify({
-            'message': 'Questionnaire saved',
-            'match': partner.as_dict()
-        }), 200
-    else:
-        return jsonify({'message': 'Questionnaire saved – waiting for others'}), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 #  Messaging endpoints
 @app.route('/sendMessage', methods=['POST'])
