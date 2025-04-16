@@ -46,15 +46,66 @@ document.addEventListener("DOMContentLoaded", function() {
     const form = document.querySelector('form');
     form.addEventListener('submit', function(event) {
         event.preventDefault();
-        if (validateForm()) {
-            // here we can submit the form(QUESTION: do we need to convert it to JSON?)
-            const formData = new FormData(form);
-            const userData = Object.fromEntries(formData.entries());
-            alert('Form submitted successfully!');
-            submitFormData(userData);
-        } else {
-            alert('Please fill out all required fields');
+        
+        // Get all form data
+        const bedtime = document.querySelector('select[name="bedtime"]').value;
+        const bedtimeImportance = document.querySelector('input[name="bedtime-importance"]:checked').value;
+        const lights = document.querySelector('input[name="lights"]:checked').value;
+        const lightsImportance = document.querySelector('input[name="lights-importance"]:checked').value;
+        const guests = document.querySelector('input[name="guests"]:checked').value;
+        const guestsImportance = document.querySelector('input[name="guests-importance"]:checked').value;
+        const personalityType = document.querySelector('input[name="personality-type"]:checked').value;
+        const personalityImportance = document.querySelector('input[name="personality-importance"]:checked').value;
+        const goingOutFrequency = document.querySelector('input[name="going-out-frequency"]:checked').value;
+        const goingOutImportance = document.querySelector('input[name="going-out-importance"]:checked').value;
+        const peopleOverPreference = document.querySelector('input[name="people-over-preference"]:checked').value;
+        const peopleOverImportance = document.querySelector('input[name="people-over-importance"]:checked').value;
+        const roommateGoingOutPreference = document.querySelector('input[name="roommate-going-out-preference"]:checked').value;
+
+        // Get user from localStorage
+        const user = JSON.parse(localStorage.getItem('user'));
+        if (!user || !user.id) {
+            alert('Please login to submit the form');
+            return;
         }
+
+        // Create and send the request
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4) {
+                if (this.status == 200) {
+                    console.log("Response Received: " + this.responseText);
+                    let data = JSON.parse(this.responseText);
+                    if ("error" in data) {
+                        alert("Questionnaire submission failed. Please try again!");
+                    } else {
+                        alert("Questionnaire submitted successfully!");
+                    }
+                } else {
+                    alert("Error submitting questionnaire. Please try again.");
+                }
+            }
+        };
+
+        xhttp.open("POST", "/api/questionnaire", true);
+        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhttp.send(
+            "user_id=" + user.id +
+            "&bedtime=" + bedtime +
+            "&bedtime_importance=" + bedtimeImportance +
+            "&lights=" + lights +
+            "&lights_importance=" + lightsImportance +
+            "&guests=" + guests +
+            "&guests_importance=" + guestsImportance +
+            "&personality_type=" + personalityType +
+            "&personality_importance=" + personalityImportance +
+            "&going_out_frequency=" + goingOutFrequency +
+            "&going_out_importance=" + goingOutImportance +
+            "&people_over_preference=" + peopleOverPreference +
+            "&people_over_importance=" + peopleOverImportance +
+            "&roommate_going_out_preference=" + roommateGoingOutPreference
+        );
+        console.log("Questionnaire Request Sent");
     });
 });
 

@@ -32,12 +32,14 @@ class User(db.Model):
         }
 
 class Questionnaire(db.Model):
+    __tablename__ = 'questionnaires'
+
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(
-        db.Integer, db.ForeignKey('user.id'),
+        db.Integer, db.ForeignKey('users.id'),
         unique=True, nullable=False
     )
-    
+
     bedtime = db.Column(db.String(30), nullable=False)  
     bedtime_importance = db.Column(db.Integer, nullable=False)  
     
@@ -46,7 +48,7 @@ class Questionnaire(db.Model):
     
     guests = db.Column(db.Integer, nullable=False) 
     guests_importance = db.Column(db.Integer, nullable=False)  
-    
+
     # Cleanliness and Organization Section
     clean = db.Column(db.Integer, nullable=False)  
     clean_importance = db.Column(db.Integer, nullable=False)  
@@ -56,7 +58,7 @@ class Questionnaire(db.Model):
     
     sharing = db.Column(db.Integer, nullable=False)  
     sharing_imp = db.Column(db.Integer, nullable=False)  
-    
+
     # Study Habits Section
     study_location = db.Column(db.String(30), nullable=False)  
     study_location_importance = db.Column(db.String(20), nullable=False) 
@@ -65,13 +67,29 @@ class Questionnaire(db.Model):
     noise_importance = db.Column(db.String(20), nullable=False)  
     
     intended_major = db.Column(db.String(30), nullable=False)  
-    major_importance = db.Column(db.String(20), nullable=False)  
+    major_importance = db.Column(db.String(20), nullable=False) 
 
+    social_preference = db.Column(db.String(30), nullable=False)
+    social_importance = db.Column(db.String(20), nullable=False)
+
+    # Social Preferences Section (Last Section)
+    personality_type = db.Column(db.String(30), nullable=False)  # Introverted, Extroverted, etc.
+    personality_importance = db.Column(db.Integer, nullable=False)
+    going_out_frequency = db.Column(db.String(30), nullable=False)  # How often they go out
+    going_out_importance = db.Column(db.Integer, nullable=False)
+    people_over_preference = db.Column(db.String(30), nullable=False)  # How often they have people over
+    people_over_importance = db.Column(db.Integer, nullable=False)
+    roommate_going_out_preference = db.Column(db.String(30), nullable=False)  # Preference for roommate's going out habits
+     
+    timestamp = db.Column(db.DateTime, default=datetime.utcnow)
 
     user = db.relationship('User', backref=db.backref(
         'questionnaire', uselist=False, cascade='all,delete-orphan'
     ))
-    
+
+    def __repr__(self):
+        return f'<Questionnaire {self.id}>'
+
     def as_dict(self):
         return {
             'id': self.id,
@@ -101,17 +119,20 @@ class Questionnaire(db.Model):
             'intended_major': self.intended_major,
             'major_importance': self.major_importance,
             
+            'social_preference': self.social_preference,
+            'social_importance': self.social_importance,
+
+            # Social Preferences (Last Section)
+            'personality_type': self.personality_type,
+            'personality_importance': self.personality_importance,
+            'going_out_frequency': self.going_out_frequency,
+            'going_out_importance': self.going_out_importance,
+            'people_over_preference': self.people_over_preference,
+            'people_over_importance': self.people_over_importance,
+            'roommate_going_out_preference': self.roommate_going_out_preference,
+            
             'timestamp': self.timestamp.isoformat()
         }
-
-    '''{
-        user_name = Tosh,
-        user_id = 234,
-        are u gonna sleep at this time 2 am,
-        importance 3,
-
-
-    }'''
 
 class Message(db.Model):
     id = db.Column(db.Integer , primary_key=True)
