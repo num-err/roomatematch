@@ -64,7 +64,7 @@ class Questionnaire(db.Model):
     major_importance = db.Column(db.String(20), nullable=False)
 
 
-   
+
 
 
     timestamp = db.Column(db.DateTime, default=datetime.utcnow)
@@ -115,10 +115,42 @@ class Questionnaire(db.Model):
             # 'going_out_importance': self.going_out_importance,
             # 'people_over_preference': self.people_over_preference,
             # 'people_over_importance': self.people_over_importance,
-            
+
 
             'timestamp': self.timestamp.isoformat()
         }
+
+
+    @property
+    def answers(self) -> dict[str, str]:
+        """
+        Return only the questionnaire answers (omit id/user_id/timestamp).
+        Values remain strings because _distance() already tries int() first.
+        """
+        return {
+            # ‑‑ Sleep ‑‑
+            "bedtime": self.bedtime,
+            "bedtime_importance": self.bedtime_importance,
+            "lights": self.lights,
+            "lights_importance": self.lights_importance,
+            "guests": self.guests,
+            "guests_importance": self.guests_importance,
+            # ‑‑ Cleanliness ‑‑
+            "clean": self.clean,
+            "clean_importance": self.clean_importance,
+            "mess": self.mess,
+            "mess_importance": self.mess_importance,
+            "sharing": self.sharing,
+            "sharing_importance": self.sharing_importance,
+            # ‑‑ Study ‑‑
+            "study_location": self.study_location,
+            "study_location_importance": self.study_location_importance,
+            "noise_preference": self.noise_preference,
+            "noise_importance": self.noise_importance,
+            "intended_major": self.intended_major,
+            "major_importance": self.major_importance,
+        }
+
 
 class Message(db.Model):
     id = db.Column(db.Integer , primary_key=True)

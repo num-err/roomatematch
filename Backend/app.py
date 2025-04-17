@@ -195,11 +195,11 @@ def submit_questionnaire():
             intended_major = request.form['intended_major'],
             major_importance = request.form['major_importance'],
 
-            
+
         )
 
         print("questionnaire")
-        
+
         # Check if user already has a questionnaire
         existing_questionnaire = Questionnaire.query.filter_by(user_id=user_id).first()
 
@@ -244,6 +244,13 @@ def send_message():
     return jsonify({'message': 'Message sent successfully'}), 201
 
 
+#  Simple GET user_id
+@app.route('/api/match/<int:user_id>', methods=['GET'])
+def api_match(user_id: int):
+    best = _best_match_for(user_id)
+    if best is None:
+        return jsonify({'message': 'No match found'})
+    return jsonify(best.as_dict())
 
 if __name__ == '__main__':
     with app.app_context():
