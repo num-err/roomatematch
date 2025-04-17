@@ -3,8 +3,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     const matchTemplate = document.getElementById('match-template');
     
     try {
-        // Get the current user's ID (you'll need to implement this based on your auth system)
-        const userId = getCurrentUserId(); // This is a placeholder - implement based on your auth system
+        // Get the current user's ID from session storage
+        const userId = getCurrentUserId();
+        if (!userId) {
+            console.error('No user ID found. Please log in.');
+            return;
+        }
         
         // Fetch the match from the backend
         const response = await fetch(`/api/match/${userId}`);
@@ -43,8 +47,24 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 });
 
-// Placeholder function - implement based on your auth system
 function getCurrentUserId() {
-    // This should return the current user's ID from your auth system
-    return 1; // Replace with actual implementation
+    // First try sessionStorage
+    let userData = sessionStorage.getItem('userData');
+    
+    // If not in sessionStorage, try localStorage (for backward compatibility)
+    if (!userData) {
+        userData = localStorage.getItem('user');
+    }
+    
+    if (!userData) {
+        return null;
+    }
+    
+    try {
+        const user = JSON.parse(userData);
+        return user.id;
+    } catch (e) {
+        console.error('Error parsing user data:', e);
+        return null;
+    }
 } 
