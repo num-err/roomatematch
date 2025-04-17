@@ -163,8 +163,13 @@ def questionnaire_section4():
 @app.route('/api/questionnaire', methods=['POST'])
 def submit_questionnaire():
     try:
+
+        print(request.form)
+
         # Get user_id from form data
         user_id = request.form['user_id']
+        print("user_id")
+
 
         # Get all questionnaire answers from form data
         questionnaire = Questionnaire(
@@ -181,7 +186,7 @@ def submit_questionnaire():
             mess= request.form['mess'],
             mess_importance= request.form['mess_importance'],
             sharing= request.form['sharing'],
-            sharing_imp= request.form['sharing_importance'],
+            sharing_importance= request.form['sharing_importance'],
 
             study_location = request.form['study_location'],
             study_location_importance = request.form['study_location_importance'],
@@ -190,18 +195,17 @@ def submit_questionnaire():
             intended_major = request.form['intended_major'],
             major_importance = request.form['major_importance'],
 
-            personality_type = request.form['personality_type'],
-            personality_importance = request.form['personality_importance'],
-            going_out_frequency = request.form['going_out_frequency'],
-            going_out_importance = request.form['going_out_importance'],
-            people_over_preference = request.form['people_over_preference'],
-            people_over_importance = request.form['people_over_importance'],
-
-
+            
         )
 
+        print("questionnaire")
+        
         # Check if user already has a questionnaire
         existing_questionnaire = Questionnaire.query.filter_by(user_id=user_id).first()
+
+        print("existing_questionnaire")
+        print(existing_questionnaire)
+
         if existing_questionnaire:
             # Update existing questionnaire
             for key, value in request.form.items():
@@ -244,7 +248,7 @@ def send_message():
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()
-    app.run(debug=True)
+    app.run(debug=True, port=5004)
 
 """@app.route('/getMessage', methods=['GET'])
 def get_messages():

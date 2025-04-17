@@ -41,19 +41,19 @@ class Questionnaire(db.Model):
     )
 
     bedtime = db.Column(db.String(30), nullable=False)
-    bedtime_importance = db.Column(db.Integer, nullable=False)
-    lights = db.Column(db.Integer, nullable=False)
-    lights_importance = db.Column(db.Integer, nullable=False)
-    guests = db.Column(db.Integer, nullable=False)
-    guests_importance = db.Column(db.Integer, nullable=False)
+    bedtime_importance = db.Column(db.String(30), nullable=False)
+    lights = db.Column(db.String(30), nullable=False)
+    lights_importance = db.Column(db.String(30), nullable=False)
+    guests = db.Column(db.String(30), nullable=False)
+    guests_importance = db.Column(db.String(30), nullable=False)
 
     # Cleanliness and Organization Section
-    clean = db.Column(db.Integer, nullable=False)
-    clean_importance = db.Column(db.Integer, nullable=False)
-    mess = db.Column(db.Integer, nullable=False)
-    mess_importance = db.Column(db.Integer, nullable=False)
-    sharing = db.Column(db.Integer, nullable=False)
-    sharing_imp = db.Column(db.Integer, nullable=False)
+    clean = db.Column(db.String(30), nullable=False)
+    clean_importance = db.Column(db.String(30), nullable=False)
+    mess = db.Column(db.String(30), nullable=False)
+    mess_importance = db.Column(db.String(30), nullable=False)
+    sharing = db.Column(db.String(30), nullable=False)
+    sharing_importance = db.Column(db.String(30), nullable=False)
 
     # Study Habits Section
     study_location = db.Column(db.String(30), nullable=False)
@@ -64,13 +64,7 @@ class Questionnaire(db.Model):
     major_importance = db.Column(db.String(20), nullable=False)
 
 
-    # Social Preferences Section (Last Section)
-    personality_type = db.Column(db.String(30), nullable=False)  # Introverted, Extroverted, etc.
-    personality_importance = db.Column(db.Integer, nullable=False)
-    going_out_frequency = db.Column(db.String(30), nullable=False)  # How often they go out
-    going_out_importance = db.Column(db.Integer, nullable=False)
-    people_over_preference = db.Column(db.String(30), nullable=False)  # How often they have people over
-    people_over_importance = db.Column(db.Integer, nullable=False)
+   
 
 
     timestamp = db.Column(db.DateTime, default=datetime.utcnow)
@@ -101,7 +95,7 @@ class Questionnaire(db.Model):
             'mess': self.mess,
             'mess_importance': self.mess_importance,
             'sharing': self.sharing,
-            'sharing_imp': self.sharing_imp,
+            'sharing_importance': self.sharing_importance,
 
             # Study Habits
             'study_location': self.study_location,
@@ -111,17 +105,17 @@ class Questionnaire(db.Model):
             'intended_major': self.intended_major,
             'major_importance': self.major_importance,
 
-            'social_preference': self.social_preference,
-            'social_importance': self.social_importance,
+            # 'social_preference': self.social_preference,
+            # 'social_importance': self.social_importance,
 
-            # Social Preferences (Last Section)
-            'personality_type': self.personality_type,
-            'personality_importance': self.personality_importance,
-            'going_out_frequency': self.going_out_frequency,
-            'going_out_importance': self.going_out_importance,
-            'people_over_preference': self.people_over_preference,
-            'people_over_importance': self.people_over_importance,
-            'roommate_going_out_preference': self.roommate_going_out_preference,
+            # # Social Preferences (Last Section)
+            # 'personality_type': self.personality_type,
+            # 'personality_importance': self.personality_importance,
+            # 'going_out_frequency': self.going_out_frequency,
+            # 'going_out_importance': self.going_out_importance,
+            # 'people_over_preference': self.people_over_preference,
+            # 'people_over_importance': self.people_over_importance,
+            
 
             'timestamp': self.timestamp.isoformat()
         }
