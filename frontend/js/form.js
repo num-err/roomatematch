@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", function() {
             const currentSectionId = currentSection.id;
             const currentSectionNumber = parseInt(currentSectionId.replace('section', ''));
             const nextSectionId = `section${currentSectionNumber + 1}`;
-            
+
             if (validateSection(currentSection)) {
                 showSection(nextSectionId);
             }
@@ -37,16 +37,22 @@ document.addEventListener("DOMContentLoaded", function() {
             const currentSectionId = currentSection.id;
             const currentSectionNumber = parseInt(currentSectionId.replace('section', ''));
             const prevSectionId = `section${currentSectionNumber - 1}`;
-            
+
             showSection(prevSectionId);
         });
     });
-    
+
     // this is the form submission
-    const form = document.querySelector('form');
-    form.addEventListener('submit', function(event) {
+    // Maybe use document.getElementById("submit"); instead?
+    // Maybe change to an onclick event too?
+    // const form = document.querySelector('form');
+    // form.addEventListener('submit', function(event) {
+    const form = document.getElementById("sendAnswers");
+    form.addEventListener('click', function(event) {
         event.preventDefault();
-        
+
+        console.log("Testing");
+
         // Get all form data
         const bedtime = document.querySelector('select[name="bedtime"]').value;
         const bedtimeImportance = document.querySelector('input[name="bedtime-importance"]:checked').value;
@@ -54,13 +60,18 @@ document.addEventListener("DOMContentLoaded", function() {
         const lightsImportance = document.querySelector('input[name="lights-importance"]:checked').value;
         const guests = document.querySelector('input[name="guests"]:checked').value;
         const guestsImportance = document.querySelector('input[name="guests-importance"]:checked').value;
-        const personalityType = document.querySelector('input[name="personality-type"]:checked').value;
-        const personalityImportance = document.querySelector('input[name="personality-importance"]:checked').value;
-        const goingOutFrequency = document.querySelector('input[name="going-out-frequency"]:checked').value;
-        const goingOutImportance = document.querySelector('input[name="going-out-importance"]:checked').value;
-        const peopleOverPreference = document.querySelector('input[name="people-over-preference"]:checked').value;
-        const peopleOverImportance = document.querySelector('input[name="people-over-importance"]:checked').value;
-        const roommateGoingOutPreference = document.querySelector('input[name="roommate-going-out-preference"]:checked').value;
+
+        // Bug starting here.  Seems that not all of this exists on the frontend?
+        const personalityType = "";//document.querySelector('input[name="personality-type"]:checked').value;
+        const personalityImportance = "";//document.querySelector('input[name="personality-importance"]:checked').value;
+        const goingOutFrequency = "";//document.querySelector('input[name="going-out-frequency"]:checked').value;
+        const goingOutImportance = "";// = document.querySelector('input[name="going-out-importance"]:checked').value;
+        const peopleOverPreference = "";// = document.querySelector('input[name="people-over-preference"]:checked').value;
+        const peopleOverImportance = "";// = document.querySelector('input[name="people-over-importance"]:checked').value;
+        const roommateGoingOutPreference = "";// = document.querySelector('input[name="roommate-going-out-preference"]:checked').value;
+
+        // Printing some inputs for testing purposes
+        console.log(bedtime, bedtimeImportance);
 
         // Get user from localStorage
         const user = JSON.parse(localStorage.getItem('user'));
@@ -109,7 +120,7 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 });
 
-// check that all the required fields have been entered in 
+// check that all the required fields have been entered in
 // the current section before moving to the next section
 function validateSection(section) {
     let valid = true;
@@ -123,7 +134,7 @@ function validateSection(section) {
             field.classList.remove('error');
         }
     });
-        
+
     if (!valid) {
         alert('Please fill out all required fields');
     }
@@ -142,13 +153,13 @@ function validateForm() {
             field.classList.remove('error');
         }
     });
-    
+
     return valid;
 }
 
 // this is the function that will handle the form submission
 // this function will send the data to the server
-// this function will be called when we click the submit button 
+// this function will be called when we click the submit button
 function submitFormData(userData, userId) {
     console.log(userData, userId);
 

@@ -36,34 +36,34 @@ class Questionnaire(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(
-        db.Integer, db.ForeignKey('users.id'),
+        db.Integer, db.ForeignKey('user.id'),
         unique=True, nullable=False
     )
 
-    bedtime = db.Column(db.String(30), nullable=False)  
-    bedtime_importance = db.Column(db.Integer, nullable=False)  
-    lights = db.Column(db.Integer, nullable=False)  
-    lights_importance = db.Column(db.Integer, nullable=False)  
-    guests = db.Column(db.Integer, nullable=False) 
-    guests_importance = db.Column(db.Integer, nullable=False)  
+    bedtime = db.Column(db.String(30), nullable=False)
+    bedtime_importance = db.Column(db.Integer, nullable=False)
+    lights = db.Column(db.Integer, nullable=False)
+    lights_importance = db.Column(db.Integer, nullable=False)
+    guests = db.Column(db.Integer, nullable=False)
+    guests_importance = db.Column(db.Integer, nullable=False)
 
     # Cleanliness and Organization Section
-    clean = db.Column(db.Integer, nullable=False)  
-    clean_importance = db.Column(db.Integer, nullable=False)  
-    mess = db.Column(db.Integer, nullable=False)  
-    mess_importance = db.Column(db.Integer, nullable=False)  
-    sharing = db.Column(db.Integer, nullable=False)  
-    sharing_imp = db.Column(db.Integer, nullable=False)  
+    clean = db.Column(db.Integer, nullable=False)
+    clean_importance = db.Column(db.Integer, nullable=False)
+    mess = db.Column(db.Integer, nullable=False)
+    mess_importance = db.Column(db.Integer, nullable=False)
+    sharing = db.Column(db.Integer, nullable=False)
+    sharing_imp = db.Column(db.Integer, nullable=False)
 
     # Study Habits Section
-    study_location = db.Column(db.String(30), nullable=False)  
-    study_location_importance = db.Column(db.String(20), nullable=False) 
-    noise_preference = db.Column(db.String(30), nullable=False)  
-    noise_importance = db.Column(db.String(20), nullable=False)  
-    intended_major = db.Column(db.String(30), nullable=False)  
-    major_importance = db.Column(db.String(20), nullable=False) 
+    study_location = db.Column(db.String(30), nullable=False)
+    study_location_importance = db.Column(db.String(20), nullable=False)
+    noise_preference = db.Column(db.String(30), nullable=False)
+    noise_importance = db.Column(db.String(20), nullable=False)
+    intended_major = db.Column(db.String(30), nullable=False)
+    major_importance = db.Column(db.String(20), nullable=False)
 
-    
+
     # Social Preferences Section (Last Section)
     personality_type = db.Column(db.String(30), nullable=False)  # Introverted, Extroverted, etc.
     personality_importance = db.Column(db.Integer, nullable=False)
@@ -71,8 +71,8 @@ class Questionnaire(db.Model):
     going_out_importance = db.Column(db.Integer, nullable=False)
     people_over_preference = db.Column(db.String(30), nullable=False)  # How often they have people over
     people_over_importance = db.Column(db.Integer, nullable=False)
-    
-     
+
+
     timestamp = db.Column(db.DateTime, default=datetime.utcnow)
 
     user = db.relationship('User', backref=db.backref(
@@ -86,7 +86,7 @@ class Questionnaire(db.Model):
         return {
             'id': self.id,
             'user_id': self.user_id,
-            
+
             # Sleep Preferences
             'bedtime': self.bedtime,
             'bedtime_importance': self.bedtime_importance,
@@ -94,7 +94,7 @@ class Questionnaire(db.Model):
             'lights_importance': self.lights_importance,
             'guests': self.guests,
             'guests_importance': self.guests_importance,
-            
+
             # Cleanliness and Organization
             'clean': self.clean,
             'clean_importance': self.clean_importance,
@@ -102,7 +102,7 @@ class Questionnaire(db.Model):
             'mess_importance': self.mess_importance,
             'sharing': self.sharing,
             'sharing_imp': self.sharing_imp,
-            
+
             # Study Habits
             'study_location': self.study_location,
             'study_location_importance': self.study_location_importance,
@@ -110,7 +110,7 @@ class Questionnaire(db.Model):
             'noise_importance': self.noise_importance,
             'intended_major': self.intended_major,
             'major_importance': self.major_importance,
-            
+
             'social_preference': self.social_preference,
             'social_importance': self.social_importance,
 
@@ -122,7 +122,7 @@ class Questionnaire(db.Model):
             'people_over_preference': self.people_over_preference,
             'people_over_importance': self.people_over_importance,
             'roommate_going_out_preference': self.roommate_going_out_preference,
-            
+
             'timestamp': self.timestamp.isoformat()
         }
 
