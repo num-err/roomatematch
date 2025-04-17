@@ -1,20 +1,19 @@
 /* Color Variables - Add this at the top of your CSS */
 :root {
-    /* Primary Colors */
     --primary-dark: #1e1c3e;    /* Dark blue/purple - main background */
     --primary-medium: #2a284e;   /* Slightly lighter blue/purple - active states */
     --primary-light: #3a375e;    /* Lighter blue/purple - hover states */
-    
-    /* Text Colors */
+        
+        /* Text Colors */
     --text-primary: #ffffff;     /* White - primary text on dark backgrounds */
     --text-secondary: #919499;   /* Gray - secondary text */
     --text-dark: #484d55;       /* Dark gray - headings on light backgrounds */
     
-    /* Background Colors */
+
     --bg-light: rgba(255, 255, 255, 0.95);  /* Semi-transparent white - cards */
     --bg-lighter: rgba(255, 255, 255, 0.1);  /* Very transparent white - borders */
     
-    /* Accent Colors */
+
     --accent: #4ee798;          /* Green - accents and highlights */
     --accent-hover: #3dd787;    /* Darker green - accent hover states */
 }
@@ -110,7 +109,7 @@ label #cancel{
     left: 0;
 }
 
-/* Show cancel button when sidebar is visible */
+
 #check:checked ~ label #cancel{
     display: block;
 }
@@ -119,7 +118,6 @@ label #cancel{
     display: none;
 }
 
-/* Main content styling to adjust when sidebar is open */
 .main-content {
     margin-left: 30px;
     transition: all 0.5s ease;
@@ -454,7 +452,7 @@ body {
     }
 }
 
-/* Add subtle transitions */
+
 .match-card, 
 .action-button, 
 .side-bar ul li a,
@@ -463,7 +461,7 @@ body {
     transition: all 0.3s ease;
 }
 
-/* Hover Effects */
+
 .match-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 4px 8px rgba(0,0,0,0.2);
