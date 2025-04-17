@@ -1,14 +1,99 @@
+<!DOCTYPE HTML>
 <html>
     <head>
+        <title>Your Profile - RoommateMatch</title>
+        <link rel="stylesheet" href="styles.css">
+        <link rel="stylesheet" href="profile.css">
+        <script src="https://kit.fontawesome.com/7931924f68.js" crossorigin="anonymous"></script>
     </head>
-<body>
-    <h1>Profile</h1>
+    <body>
+        <input type="checkbox" id="check">
+        <label for="check">
+            <i class="fas fa-bars" id="btn"></i>   
+            <i class="fas fa-times" id="cancel"></i>
+        </label>
+        
+        <nav class="side-bar">
+            <h1>Roommate Match</h1>
+            <ul>
+                <li><a href="index copy.html"><i class="fas fa-home"></i>
+                    <span>Home</span></a></li>
+                <li class="active"><a href="profile.html"><i class="fas fa-user-circle"></i> 
+                    <span>Profile</span></a></li>
+                <li><a href="questionaire.html"><i class="fas fa-clipboard-list"></i>
+                    <span>Questionnaire</span></a></li>
+                <li><a href="index.html"><i class="fas fa-user-friends"></i>
+                    <span>Matches</span></a></li>
+                <li><a href="messages.html"><i class="fas fa-comments"></i> 
+                    <span>Messages</span></a></li>
+            </ul>
+        </nav>
 
+        <div class="main-content">
+            <div class="profile-header">
+                <h1>Your Profile</h1>
+            </div>
 
+            <div class="profile-container">
+                <div class="profile-section">
+                    <h2>Basic Information</h2>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <span class="label">Name:</span>
+                            <span class="value" id="user-name">Loading...</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="label">Year:</span>
+                            <span class="value" id="user-year">Loading...</span>
+                        </div>
+                    </div>
+                </div>
 
-</body>
+                <div class="profile-section">
+                    <h2>Your Preferences</h2>
+                    <div class="preferences-grid">
+                        <div class="preference-category">
+                            <h3>Sleep Schedule</h3>
+                            <div class="preference-item">
+                                <span class="label">Bedtime:</span>
+                                <span class="value" id="bedtime">Loading...</span>
+                            </div>
+                            <div class="preference-item">
+                                <span class="label">Lights Out:</span>
+                                <span class="value" id="lights">Loading...</span>
+                            </div>
+                        </div>
 
+                        <div class="preference-category">
+                            <h3>Cleanliness</h3>
+                            <div class="preference-item">
+                                <span class="label">Cleanliness Level:</span>
+                                <span class="value" id="clean">Loading...</span>
+                            </div>
+                            <div class="preference-item">
+                                <span class="label">Sharing Preferences:</span>
+                                <span class="value" id="sharing">Loading...</span>
+                            </div>
+                        </div>
 
+                        <div class="preference-category">
+                            <h3>Study Habits</h3>
+                            <div class="preference-item">
+                                <span class="label">Study Location:</span>
+                                <span class="value" id="study-location">Loading...</span>
+                            </div>
+                            <div class="preference-item">
+                                <span class="label">Noise Preference:</span>
+                                <span class="value" id="noise">Loading...</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="profile.js"></script>
+    </body>
 </html>
 
 
