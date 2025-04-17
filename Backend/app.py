@@ -96,7 +96,7 @@ def serve_login():
 
 @app.route('/questionnaire')
 def serve_questionnaire():
-    return _serve_frontend_file('UserInterface/question.html')
+    return _serve_frontend_file('UserInterface/questionaire.html')
 
 #  Authentication API
 @app.route('/register', methods=['POST'])
@@ -159,7 +159,7 @@ def questionnaire_section3():
 def questionnaire_section4():
     return _serve_frontend_file('UserInterface/questionaire.html')
 
-# Update the questionnaire submission endpoint
+# questionnaire submission endpoint
 @app.route('/api/questionnaire', methods=['POST'])
 def submit_questionnaire():
     try:
@@ -175,13 +175,29 @@ def submit_questionnaire():
             lights_importance=request.form['lights_importance'],
             guests=request.form['guests'],
             guests_importance=request.form['guests_importance'],
-            personality_type=request.form['personality_type'],
-            personality_importance=request.form['personality_importance'],
-            going_out_frequency=request.form['going_out_frequency'],
-            going_out_importance=request.form['going_out_importance'],
-            people_over_preference=request.form['people_over_preference'],
-            people_over_importance=request.form['people_over_importance'],
-            roommate_going_out_preference=request.form['roommate_going_out_preference']
+            
+            clean = request.form['clean'],
+            clean_importance= request.form['clean_importance'],
+            mess= request.form['mess'],
+            mess_importance= request.form['mess_importance'],
+            sharing= request.form['sharing'],
+            sharing_imp= request.form['sharing_importance'],
+
+            study_location = request.form['study_location'],
+            study_location_importance = request.form['study_location_importance'],
+            noise_preference = request.form['noise_preference'],
+            noise_importance = request.form['noise_importance'],
+            intended_major = request.form['intended_major'],
+            major_importance = request.form['major_importance'],
+
+            personality_type = request.form['personality_type'],
+            personality_importance = request.form['personality_importance'],
+            going_out_frequency = request.form['going_out_frequency'],
+            going_out_importance = request.form['going_out_importance'],
+            people_over_preference = request.form['people_over_preference'],
+            people_over_importance = request.form['people_over_importance'],
+            
+            
         )
 
         # Check if user already has a questionnaire
@@ -223,7 +239,14 @@ def send_message():
 
     return jsonify({'message': 'Message sent successfully'}), 201
 
-@app.route('/getMessage', methods=['GET'])
+
+
+if __name__ == '__main__':
+    with app.app_context():
+        db.create_all()
+    app.run(debug=True)
+
+"""@app.route('/getMessage', methods=['GET'])
 def get_messages():
     user1 = request.args.get('user1', type=int)
     user2 = request.args.get('user2', type=int)
@@ -249,12 +272,9 @@ def post_data():
     if request.is_json:
         data = request.get_json()
         return jsonify({'message': 'This is a POST request', 'data': data}), 201
-    return jsonify({'error': 'Request must be JSON'}), 400
+    return jsonify({'error': 'Request must be JSON'}), 400"""
 
-if __name__ == '__main__':
-    with app.app_context():
-        db.create_all()
-    app.run(debug=True)
+
 
 
 
