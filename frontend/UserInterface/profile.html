@@ -3,7 +3,6 @@
     <head>
         <title>Your Profile - RoommateMatch</title>
         <link rel="stylesheet" href="styles.css">
-        <link rel="stylesheet" href="profile.css">
         <script src="https://kit.fontawesome.com/7931924f68.js" crossorigin="anonymous"></script>
         <style>
             /* Profile Page Styles */
@@ -135,6 +134,61 @@
                     font-size: 1.5rem;
                 }
             }
+
+            /* Edit Mode Styles */
+            .edit-mode .value {
+                display: none;
+            }
+            .edit-mode .edit-input {
+                display: block;
+            }
+            .edit-input {
+                display: none;
+                width: 200px;
+                padding: 5px;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+            }
+            .edit-buttons {
+                display: flex;
+                margin-top: 1rem;
+                gap: 1rem;
+            }
+            .save-button, .cancel-button {
+                display: none;
+            }
+            .edit-mode .save-button, .edit-mode .cancel-button {
+                display: block;
+            }
+            .edit-button, .save-button, .cancel-button {
+                padding: 8px 16px;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+                font-weight: bold;
+                transition: background-color 0.3s;
+            }
+            .edit-button {
+                background-color: #484d55;
+                color: white;
+            }
+            .save-button {
+                background-color: #1b6b1e;
+                color: white;
+            }
+            .cancel-button {
+                background-color: #f44336;
+                color: white;
+            }
+            .edit-button:hover {
+                background-color: #3a3e45;
+            }
+            .save-button:hover {
+                background-color: #293b2a;
+            }
+            .cancel-button:hover {
+                background-color: #da190b;
+            }
         </style>
     </head>
     <body>
@@ -157,6 +211,8 @@
                     <span>Matches</span></a></li>
                 <li><a href="messages.html"><i class="fas fa-comments"></i> 
                     <span>Messages</span></a></li>
+                <li><a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span></a></li>
             </ul>
         </nav>
 
@@ -170,13 +226,25 @@
                     <h2>Basic Information</h2>
                     <div class="info-grid">
                         <div class="info-item">
-                            <span class="label">Name:</span>
+                            <span class="label">Username:</span>
                             <span class="value" id="user-name">Loading...</span>
+                            <input type="text" class="edit-input" id="edit-name" placeholder="Enter username">
                         </div>
                         <div class="info-item">
-                            <span class="label">Year:</span>
+                            <span class="label">Class Year:</span>
                             <span class="value" id="user-year">Loading...</span>
+                            <input type="text" class="edit-input" id="edit-year" placeholder="Enter class year">
                         </div>
+                        <div class="info-item">
+                            <span class="label">Email:</span>
+                            <span class="value" id="user-email">Loading...</span>
+                            <input type="text" class="edit-input" id="edit-email" placeholder="Enter email">
+                        </div>
+                    </div>
+                    <div class="edit-buttons">
+                        <button class="edit-button" onclick="toggleEditMode()">Edit</button>
+                        <button class="save-button" onclick="saveProfile()">Save</button>
+                        <button class="cancel-button" onclick="cancelEdit()">Cancel</button>
                     </div>
                 </div>
 
@@ -223,7 +291,81 @@
             </div>
         </div>
 
-        <script src="profile.js"></script>
+        <script>
+            // Load user data when page loads
+            document.addEventListener('DOMContentLoaded', function() {
+                loadUserProfile();
+            });
+
+            function loadUserProfile() {
+                const user = JSON.parse(localStorage.getItem('user'));
+                if (user) {
+                    document.getElementById('user-name').textContent = user.username;
+                    document.getElementById('user-year').textContent = user.classyear;
+                    document.getElementById('user-email').textContent = user.email;
+                    
+                    // Set edit input values
+                    document.getElementById('edit-name').value = user.username;
+                    document.getElementById('edit-year').value = user.classyear;
+                    document.getElementById('edit-email').value = user.email;
+                }
+            }
+
+            function toggleEditMode() {
+                const profileSection = document.querySelector('.profile-section');
+                profileSection.classList.toggle('edit-mode');
+                
+                // Update button text
+                const editButton = document.querySelector('.edit-button');
+                if (profileSection.classList.contains('edit-mode')) {
+                    editButton.textContent = 'Editing...';
+                } else {
+                    editButton.textContent = 'Edit';
+                }
+            }
+
+            function saveProfile() {
+                const user = JSON.parse(localStorage.getItem('user'));
+                if (!user) return;
+
+                const updatedUser = {
+                    ...user,
+                    username: document.getElementById('edit-name').value,
+                    classyear: document.getElementById('edit-year').value,
+                    email: document.getElementById('edit-email').value
+                };
+
+                const xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function() {
+                    if (this.readyState === 4) {
+                        if (this.status === 200) {
+                            const data = JSON.parse(this.responseText);
+                            localStorage.setItem('user', JSON.stringify(data.user));
+                            loadUserProfile();
+                            toggleEditMode();
+                            alert('Profile updated successfully!');
+                        } else {
+                            const data = JSON.parse(this.responseText);
+                            alert(data.error || 'Failed to update profile. Please try again.');
+                        }
+                    }
+                };
+
+                xhttp.open('POST', '/api/update-profile', true);
+                xhttp.setRequestHeader('Content-Type', 'application/json');
+                xhttp.send(JSON.stringify(updatedUser));
+            }
+
+            function cancelEdit() {
+                loadUserProfile(); // Reset to original values
+                toggleEditMode();
+            }
+
+            function logout() {
+                localStorage.removeItem('user');
+                window.location.href = '/LoginPage/index.html';
+            }
+        </script>
     </body>
 </html>
 

@@ -30,6 +30,7 @@
 			<li><a href="questionaire.html">Questionnaire</a></li>
 			<li><a href="index.html">Find Matches</a></li>
 			<li><a href="messages.html">Messages</a></li>
+			<li><a href="#" onclick="logout()">Logout</a></li>
 			</ul>
 		</nav>
 
@@ -124,5 +125,11 @@
 				</section>
 
 		</div>
+		<script>
+			function logout() {
+				localStorage.removeItem('user');
+				window.location.href = '/LoginPage/index.html';
+			}
+		</script>
 	</body>
 </html>

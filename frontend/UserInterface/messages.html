@@ -26,6 +26,8 @@
                     <span>Matches</span></a></li>
                 <li class="active"><a href="messages.html"><i class="fas fa-comments"></i> 
                     <span>Messages</span></a></li>
+                <li><a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span></a></li>
             </ul>
         </nav>
 
@@ -58,5 +60,11 @@
         </div>
 
         <script src="../js/messages.js"></script>
+        <script>
+            function logout() {
+                localStorage.removeItem('user');
+                window.location.href = '/LoginPage/index.html';
+            }
+        </script>
     </body>
 </html> 
