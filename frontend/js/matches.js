@@ -1,70 +1,116 @@
-document.addEventListener('DOMContentLoaded', async () => {
-    const matchesList = document.getElementById('matches-list');
-    const matchTemplate = document.getElementById('match-template');
-    
-    try {
-        // Get the current user's ID from session storage
-        const userId = getCurrentUserId();
-        if (!userId) {
-            console.error('No user ID found. Please log in.');
-            return;
-        }
-        
-        // Fetch the match from the backend
-        const response = await fetch(`/api/match/${userId}`);
-        const matchData = await response.json();
-        
-        if (matchData && !matchData.message) {
-            // Update the first card with the match data
-            const firstCard = matchesList.querySelector('.match-card');
-            if (firstCard) {
-                firstCard.innerHTML = matchTemplate.innerHTML;
-                
-                // Fill in the match data
-                firstCard.querySelector('.match-name').textContent = matchData.name;
-                firstCard.querySelector('.match-year').textContent = matchData.year;
-                firstCard.querySelector('.score').textContent = '90%'; // You can calculate this based on your matching algorithm
-                
-                // Update other details based on the questionnaire data
-                firstCard.querySelector('.sleep-info').textContent = matchData.sleep_schedule || 'Not specified';
-                firstCard.querySelector('.clean-info').textContent = matchData.cleanliness || 'Not specified';
-                firstCard.querySelector('.study-info').textContent = matchData.study_habits || 'Not specified';
-                firstCard.querySelector('.social-info').textContent = matchData.social_preferences || 'Not specified';
-                
-                // Add event listeners for buttons
-                firstCard.querySelector('.view-profile').addEventListener('click', () => {
-                    window.location.href = `/profile/${matchData.id}`;
-                });
-                
-                firstCard.querySelector('.send-message').addEventListener('click', () => {
-                    // Implement message functionality
-                    console.log('Message button clicked');
-                });
-            }
-        }
-    } catch (error) {
-        console.error('Error fetching matches:', error);
-    }
-});
-
+//returns the user's id
 function getCurrentUserId() {
-    // First try sessionStorage
-    let userData = sessionStorage.getItem('userData');
-    
-    // If not in sessionStorage, try localStorage (for backward compatibility)
-    if (!userData) {
-        userData = localStorage.getItem('user');
+  let raw = sessionStorage.getItem("userData") || localStorage.getItem("user");
+  if (!raw) return null;
+  try {
+    return JSON.parse(raw).id;
+  } catch (err) {
+    console.error("Could not parse user data:", err);
+    return null;
+  }
+}
+
+//makes data legible
+function renderQuestionnaire(q) {
+  // Map database field keys → human‑readable labels
+  const labels = {
+    bedtime: "Bedtime",
+    lights: "Lights tolerance",
+    guests: "Overnight guests",
+    clean: "Cleaning frequency",
+    mess: "Mess tolerance",
+    sharing: "Sharing items",
+    study_location: "Study location",
+    noise_preference: "Noise while studying",
+    intended_major: "Intended major",
+  };
+
+  return `
+    <ul class="questionnaire-list">
+      ${Object.entries(labels)
+        .map(
+          ([key, label]) =>
+            `<li><strong>${label}:</strong> ${q[key] ?? "—"}</li>`,
+        )
+        .join("")}
+    </ul>
+  `;
+}
+
+// visable card
+function buildMatchCard(matchUser) {
+  const card = document.createElement("div");
+  card.className = "match-card";
+
+  card.innerHTML = `
+    <div class="match-header">
+      <h2 class="match-name">${matchUser.username}</h2>
+      <p class="match-year">Class of ${matchUser.classyear ?? ""}</p>
+    </div>
+
+    <button class="view-q-btn">View their questionnaire</button>
+    <div class="q-box" style="display:none; margin-top:1rem;"></div>
+  `;
+
+  const btn = card.querySelector(".view-q-btn");
+  const box = card.querySelector(".q-box");
+  let loaded = false;
+
+  btn.addEventListener("click", async () => {
+    if (!loaded) {
+      try {
+        const r = await fetch(`/api/questionnaire/${matchUser.id}`);
+        if (r.ok) {
+          const q = await r.json();
+          box.innerHTML = renderQuestionnaire(q);
+        } else {
+          box.innerHTML = "<p>(Could not load questionnaire.)</p>";
+        }
+      } catch (err) {
+        console.error("Error loading questionnaire:", err);
+        box.innerHTML = "<p>(Error loading questionnaire.)</p>";
+      }
+      loaded = true;
     }
-    
-    if (!userData) {
-        return null;
-    }
-    
-    try {
-        const user = JSON.parse(userData);
-        return user.id;
-    } catch (e) {
-        console.error('Error parsing user data:', e);
-        return null;
-    }
-} 
+    // toggle visibility
+    box.style.display = box.style.display === "none" ? "block" : "none";
+  });
+
+  return card;
+}
+
+//main
+document.addEventListener("DOMContentLoaded", async () => {
+  const userId = getCurrentUserId();
+  if (!userId) {
+    console.error("No user ID found. Please log in.");
+    // optional: window.location.href = "/login";
+    return;
+  }
+
+  let response;
+  try {
+    response = await fetch(`/api/match/${userId}`);
+  } catch (err) {
+    console.error("Network error while fetching match:", err);
+    return;
+  }
+
+  if (!response.ok) {
+    // 404 means no match yet → leave placeholders
+    return;
+  }
+
+  const matchUser = await response.json(); // {id, username, ...}
+
+  // Replace only the first placeholder card
+  const list = document.getElementById("matches-list");
+  const placeholder = list.querySelector(".match-card.placeholder");
+  if (!placeholder) {
+    console.warn("No placeholder found to replace.");
+    return;
+  }
+
+  const newCard = buildMatchCard(matchUser);
+  list.replaceChild(newCard, placeholder);
+});

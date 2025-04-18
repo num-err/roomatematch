@@ -252,6 +252,16 @@ def api_match(user_id: int):
         return jsonify({'message': 'No match found'})
     return jsonify(best.as_dict())
 
+
+#  Returns that user's questionnaire answers
+@app.route('/api/questionnaire/<int:user_id>', methods=['GET'])
+def api_get_questionnaire(user_id: int):
+    q = Questionnaire.query.filter_by(user_id=user_id).first()
+    if q is None:
+        return jsonify({'message': 'Questionnaire not found'})
+    return jsonify(q.as_dict())
+
+
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()
