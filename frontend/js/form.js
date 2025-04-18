@@ -42,6 +42,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 alert("Questionnaire submission failed. Please try again!");
               } else {
                 alert("Questionnaire submitted successfully!");
+                window.location.href = "/UserInterface/home.html";
               }
             } else {
               alert("Error submitting questionnaire. Please try again.");
