@@ -4,7 +4,7 @@ body{
     max-width: 800px;
     margin: 0 auto;
     padding: 20px;
-    background: dodgerblue;
+    background: #998686 ;
     color: #4a4a4a;            /* darker text for legibility */
 }
 
@@ -13,7 +13,7 @@ h1{
     color: #fff;
     text-align: center;
     margin-bottom: 30px;
-    background: dodgerblue;
+    background: #998686;
     padding: 20px 10px;
     border-radius: 8px;
 }
@@ -27,7 +27,7 @@ h1{
 }
 
 .section h2{
-    color: #0066ff;
+    color: #4A2C2A;
     border-bottom: 2px solid #ecf0f1;
     padding-bottom: 10px;
     margin: 0 0 20px 0;
@@ -43,7 +43,7 @@ h1{
 }
 
 .progress{
-    background: #1e90ff;       /* blue fill so progress is visible */
+    background:#4A2C2A;       /* blue fill so progress is visible */
     height: 100%;
     width: 0%;
     transition: width 0.3s ease-in-out;   /* fixed “widrh” typo */
@@ -51,7 +51,7 @@ h1{
 
 /* ----------  QUESTIONS / OPTIONS  ---------- */
 .question{
-    color: royalblue;
+    color: #4A2C2A;
     margin-bottom: 20px;
 }
 
@@ -106,7 +106,7 @@ input[type="radio"]{
 }
 
 button{
-    background: dodgerblue;
+    background: #4A2C2A;
     color: #fff;
     border: none;
     padding: 10px 24px;
@@ -117,11 +117,11 @@ button{
 }
 
 button:hover{
-    background: rgb(65,182,225);
+    background: #4A2C2A;
 }
 
 button:disabled{
-    background: #a8d0f0;
+    background: #4A2C2A;
     cursor: not-allowed;
 }
 
