@@ -1,77 +1,73 @@
 body {
     margin: 2px;
-    background-image: linear-gradient(
-        150deg,
-        rgb(106, 133, 136),
-        rgb(219, 213, 110)
-    );
+    background-color: #484d55;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    font-family: Arial, sans-serif;
 }
 
 #top-header {
-    background-color: rgb(246, 246, 246);
-    color: black;
-    padding: 50px;
-    font-size: 50px;
-    text-align: center;
-    text-decoration: underline;
-    border: 3px solid rgb(124, 152, 133);
-    background-color: rgb(241, 255, 231);
+    display: none; /* Hide the old header */
 }
 
 .login-container {
-    padding-left: 30%;
-    padding-top: 10%;
-    color: black;
-    font-size: 20px;
-    text-transform: uppercase;
-    height: 100px;
+    padding: 0;
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
 }
-.login-container:hover {
-    text-decoration: underline;
-    cursor: pointer;
-}
+
 .login-input {
-    padding: 10px 50px 20px 50px;
-    width: 50%;
-    background-color: rgb(241, 255, 231);
-    box-shadow: 6px 6px 3px 1px rgba(87, 54, 54, 0.9);
+    padding: 2rem;
+    width: 100%;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
-.user-name,
-.user-classYear,
-.user-email,
-.user-password {
-    font-size: 10px;
-    width: 50%;
-    font-family: system-ui, sans-serif;
-    padding: 10px;
-    font-weight: bold;
-    color: black;
-    border: 1.5px solid rgb(0, 0, 0);
-    border-radius: 3px;
-    background-color: rgb(241, 255, 231);
+
+.login-input h2 {
+    color: #484d55;
+    text-align: center;
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
+    text-transform: none;
 }
+
+.user-name, .user-classYear, .user-email, .user-password {
+    width: 100%;
+    padding: 0.8rem;
+    font-size: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: white;
+    margin-bottom: 1rem;
+    box-sizing: border-box;
+}
+
+.user-name:hover,
 .user-classYear:hover,
 .user-email:hover,
-.user-name:hover,
 .user-password:hover {
-    border-color: rgb(200, 133, 88);
+    border-color: #484d55;
 }
+
 .submit-button {
-    margin-bottom: 20px;
-    text-align: center;
-    font-size: 10px;
+    width: 100%;
+    padding: 0.8rem;
+    font-size: 1rem;
     color: white;
-    width: 52%;
-    height: 30px;
-    border: 2px black;
-    background-color: rgb(12, 12, 12);
-    border-radius: 15px;
-    font-weight: bold;
-}
-.submit-button:hover {
-    background-color: rgb(180, 96, 40);
-    color: white;
+    background-color: #484d55;
+    border: none;
+    border-radius: 4px;
     cursor: pointer;
+    transition: background-color 0.3s;
+    margin-bottom: 1rem;
+}
+
+.submit-button:hover {
+    background-color: #3a3e45;
 }
 
 

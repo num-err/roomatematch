@@ -2,21 +2,15 @@
 <html>
     <head>
         <meta charset="utf-8" />
-        <title>Login to Roommate Match</title>
-        <!-- Use url_for so the correct static path is injected -->
-        <link
-            rel="stylesheet"
-            href="styles.css"
-        />
+        <title>Login - RoommateMatch</title>
+        <link rel="stylesheet" href="styles.css">
+        <script src="https://kit.fontawesome.com/7931924f68.js" crossorigin="anonymous"></script>
     </head>
     <body>
-        <h1 id="top-header" class="bordered-content">
-            Login to My Roommate Match
-        </h1>
-
         <div class="login-container">
             <div id="login-bar" class="login-input">
-                <h2>Login</h2>
+                <h2>RoommateMatch</h2>
+                <p style="text-align: center; color: #484d55; margin-bottom: 1.5rem;">Find your perfect roommate</p>
 
                 <div>
                     <input
@@ -26,7 +20,6 @@
                         placeholder="Enter your username"
                     />
                 </div>
-                <br />
 
                 <div>
                     <input
@@ -36,13 +29,16 @@
                         placeholder="Password"
                     />
                 </div>
-                <br />
 
                 <div>
                     <button class="submit-button" onclick="buttonClicked()">
-                        Submit
+                        Login
                     </button>
                 </div>
+
+                <p style="text-align: center; margin-top: 1rem;">
+                    Don't have an account? <a href="register.html" style="color: #484d55; text-decoration: none;">Register here</a>
+                </p>
             </div>
         </div>
 
