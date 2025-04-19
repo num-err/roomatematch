@@ -6,9 +6,7 @@ from flask import (
     send_from_directory, abort, redirect, url_for
 )
 from config import Config
-from models import User, db, Questionnaire
-from gale_shapley import stable_matching
-#from seed import seed_data
+from models import User, db, Questionnaire, Message
 
 #  Flask setup
 BASE_DIR      = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
@@ -46,14 +44,14 @@ def _distance(a1: dict, a2: dict) -> int:
     For non‑numeric answers: 0 if same, 1 if different i.e major and bedtime
     """
     score = 0
-    #Comparing 2 sets person 1 and person 2
+    # Comparing 2 sets person 1 and person 2
     for key in (set(a1) & set(a2)):
         v1, v2 = a1[key], a2[key]
         try:
-            #For numerical answers
+            # For numerical answers
             score += abs(int(v1) - int(v2))
         except ValueError:
-            #For text/matching answers
+            # For text/matching answers
             score += 0 if v1 == v2 else 1
     return score
 
@@ -98,6 +96,10 @@ def serve_login():
 def serve_questionnaire():
     return _serve_frontend_file('UserInterface/questionaire.html')
 
+@app.route('/profile')
+def serve_profile():
+    return _serve_frontend_file('UserInterface/profile.html')
+
 #  Authentication API
 @app.route('/register', methods=['POST'])
 def register():
@@ -120,7 +122,7 @@ def register():
         return jsonify({
             'message': 'User registered successfully',
             'redirect': '/login'
-        }), 200
+        })
     except Exception as e:
         return jsonify({'error': str(e)})
 
@@ -138,7 +140,7 @@ def login():
             'message': 'Logged in successfully',
             'user': user.as_dict(),
             'redirect': '/questionnaire'
-        }), 200
+        })
     except Exception as e:
         return jsonify({'error': str(e)})
 
@@ -163,64 +165,38 @@ def questionnaire_section4():
 @app.route('/api/questionnaire', methods=['POST'])
 def submit_questionnaire():
     try:
-
         print(request.form)
 
         # Get user_id from form data
-        user_id = request.form['user_id']
+        user_id = int(request.form['user_id'])
         print("user_id")
 
-
-        # Get all questionnaire answers from form data
-        questionnaire = Questionnaire(
-            user_id=user_id,
-            bedtime=request.form['bedtime'],
-            bedtime_importance=request.form['bedtime_importance'],
-            lights=request.form['lights'],
-            lights_importance=request.form['lights_importance'],
-            guests=request.form['guests'],
-            guests_importance=request.form['guests_importance'],
-
-            clean = request.form['clean'],
-            clean_importance= request.form['clean_importance'],
-            mess= request.form['mess'],
-            mess_importance= request.form['mess_importance'],
-            sharing= request.form['sharing'],
-            sharing_importance= request.form['sharing_importance'],
-
-            study_location = request.form['study_location'],
-            study_location_importance = request.form['study_location_importance'],
-            noise_preference = request.form['noise_preference'],
-            noise_importance = request.form['noise_importance'],
-            intended_major = request.form['intended_major'],
-            major_importance = request.form['major_importance'],
-
-
-        )
-
-        print("questionnaire")
+        # Collect all questionnaire answers
+        values = {k: v for k, v in request.form.items() if k != "user_id"}
 
         # Check if user already has a questionnaire
         existing_questionnaire = Questionnaire.query.filter_by(user_id=user_id).first()
 
-        print("existing_questionnaire")
-        print(existing_questionnaire)
-
         if existing_questionnaire:
             # Update existing questionnaire
-            for key, value in request.form.items():
+            for key, value in values.items():
                 if hasattr(existing_questionnaire, key):
                     setattr(existing_questionnaire, key, value)
             db.session.commit()
-            return jsonify({'message': 'Questionnaire updated successfully'}), 200
+            msg = 'Questionnaire updated successfully'
         else:
             # Create new questionnaire
+            questionnaire = Questionnaire(user_id=user_id, **values)
             db.session.add(questionnaire)
             db.session.commit()
-            return jsonify({'message': 'Questionnaire submitted successfully'}), 200
+            msg = 'Questionnaire submitted successfully'
+
+        # include redirect so front‑end can navigate to profile
+        return jsonify({'message': msg, 'redirect': '/profile'})
 
     except Exception as e:
-        return jsonify({'error': str(e)}), 500
+        db.session.rollback()
+        return jsonify({'error': str(e)})
 
 #  Messaging endpoints
 @app.route('/sendMessage', methods=['POST'])
@@ -231,7 +207,7 @@ def send_message():
     content     = data.get('content')
 
     if not sender_id or not receiver_id or not content:
-        return jsonify({'error': 'Missing fields'}), 400
+        return jsonify({'error': 'Missing fields'})
 
     message = Message(
         sender_id = sender_id,
@@ -241,7 +217,7 @@ def send_message():
     db.session.add(message)
     db.session.commit()
 
-    return jsonify({'message': 'Message sent successfully'}), 201
+    return jsonify({'message': 'Message sent successfully'})
 
 
 #  Simple GET user_id
@@ -251,7 +227,6 @@ def api_match(user_id: int):
     if best is None:
         return jsonify({'message': 'No match found'})
     return jsonify(best.as_dict())
-
 
 #  Returns that user's questionnaire answers
 @app.route('/api/questionnaire/<int:user_id>', methods=['GET'])
@@ -266,32 +241,32 @@ def update_profile():
     try:
         data = request.get_json()
         user_id = data.get('id')
-        
+
         user = User.query.get(user_id)
         if not user:
-            return jsonify({'error': 'User not found'}), 404
-            
+            return jsonify({'error': 'User not found'})
+
         # Update user fields
-        user.username = data.get('username', user.username)
-        user.email = data.get('email', user.email)
+        user.username  = data.get('username',  user.username)
+        user.email     = data.get('email',     user.email)
         user.classyear = data.get('classyear', user.classyear)
-        
+
         # Check if username or email already exists for another user
         existing_user = User.query.filter(
             (User.username == user.username) | (User.email == user.email),
             User.id != user_id
         ).first()
         if existing_user:
-            return jsonify({'error': 'Username or email already exists'}), 400
-            
+            return jsonify({'error': 'Username or email already exists'})
+
         db.session.commit()
         return jsonify({
             'message': 'Profile updated successfully',
             'user': user.as_dict()
-        }), 200
+        })
     except Exception as e:
         db.session.rollback()
-        return jsonify({'error': str(e)}), 500
+        return jsonify({'error': str(e)})
 
 if __name__ == '__main__':
     with app.app_context():
@@ -325,122 +300,3 @@ def post_data():
         data = request.get_json()
         return jsonify({'message': 'This is a POST request', 'data': data}), 201
     return jsonify({'error': 'Request must be JSON'}), 400"""
-
-
-
-
-
-#Scraped for now
-
-# #  Questionnaire & matching API
-# def _questionnaire_distance(a1: dict, a2: dict) -> int:
-#     """
-#     Simple numeric distance: sum(|answer_i - answer_j|).
-#     Non‑numeric answers count 1 if different, 0 if same.
-#     """
-#     keys = set(a1) & set(a2)
-#     score = 0
-#     for k in keys:
-#         try:
-#             score += abs(int(a1[k]) - int(a2[k]))
-#         except Exception:
-#             score += 0 if a1[k] == a2[k] else 1
-#     return score
-
-
-# def _build_preferences():
-#     """
-#     Pull every completed questionnaire and convert to
-#     Gale–Shapley preference lists.
-#     Returns: (proposers, receivers, prop_prefs, recv_prefs)
-#     or None if we don't have both sides yet.
-#     """
-#     q_rows = Questionnaire.query.all()
-#     if len(q_rows) < 2:
-#         return None  # need at least two people
-
-#     answers = {q.user_id: q.answers for q in q_rows}
-#     users   = list(answers.keys())
-
-#     # Distance matrix
-#     dist = {u: {} for u in users}
-#     for u in users:
-#         for v in users:
-#             if u == v:
-#                 continue
-#             dist[u][v] = _questionnaire_distance(answers[u], answers[v])
-
-#     # Arbitrary split: even‑id users propose, odd‑id users receive
-#     proposers  = [u for u in users if u % 2 == 0]
-#     receivers  = [u for u in users if u % 2 == 1]
-#     if not proposers or not receivers:
-#         return None
-
-#     prop_prefs = {p: sorted(receivers, key=lambda r: dist[p][r]) for p in proposers}
-#     recv_prefs = {r: sorted(proposers, key=lambda p: dist[r][p]) for r in receivers}
-#     return proposers, receivers, prop_prefs, recv_prefs
-
-
-# def _run_matching_for(user_id: int):
-#     """
-#     Execute Gale–Shapley and return the matched User (or None)
-#     for the given user_id.
-#     """
-#     prefs = _build_preferences()
-#     if prefs is None:
-#         return None  # not enough data yet
-
-#     proposers, receivers, prop_prefs, recv_prefs = prefs
-#     matches = stable_matching(proposers, receivers, prop_prefs, recv_prefs)
-
-#     # matches is {proposer -> receiver}
-#     partner_id = None
-#     if user_id in matches:                 # user is a proposer
-#         partner_id = matches[user_id]
-#     else:                                  # user may be a receiver
-#         for p, r in matches.items():
-#             if r == user_id:
-#                 partner_id = p
-#                 break
-
-#     return User.query.get(partner_id) if partner_id else None
-
-
-# @app.route('/api/questionnaire', methods=['POST'])
-# def submit_questionnaire():
-#     """
-#     Expected JSON:
-#     {
-#         "user_id": <int>,
-#         "answers": { "bedtime": "2", "bedtime-importance": "3", ... }
-#     }
-#     """
-#     data      = request.get_json(silent=True) or {}
-#     user_id   = data.get('user_id')
-#     answers   = data.get('answers')
-
-#     if not user_id or not answers:
-#         return jsonify({'error': 'user_id and answers required'}), 400
-
-#     # Upsert questionnaire
-#     q = Questionnaire.query.filter_by(user_id=user_id).first()
-#     if q:
-#         q.answers   = answers
-#         q.timestamp = datetime.utcnow()
-#     else:
-#         q = Questionnaire(user_id=user_id, answers=answers)
-#         db.session.add(q)
-
-#     db.session.commit()
-
-#     # Try to find a match immediately
-#     partner = _run_matching_for(user_id)
-#     if partner:
-#         return jsonify({
-#             'message': 'Questionnaire saved',
-#             'match': partner.as_dict()
-#         }), 200
-
-#     return jsonify({
-#         'message': 'Questionnaire saved – waiting for more students'
-#     }), 200
