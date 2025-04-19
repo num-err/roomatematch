@@ -71,4 +71,46 @@ body {
 
 .send-message:hover {
     background-color: rgba(74, 44, 42, 0.2);
+}
+
+.questionnaire-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.questionnaire-list li {
+    padding: 12px 15px;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.questionnaire-list li:last-child {
+    border-bottom: none;
+}
+
+.questionnaire-list li strong {
+    color: #4A2C2A;
+    font-weight: 600;
+}
+
+.questionnaire-list li span {
+    color: #666;
+    text-align: right;
 } 
+.view-q-btn {
+    margin-top: 10px;
+    background-color: #4A2C2A; /* Mahogany */
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+

@@ -12,25 +12,90 @@ function getCurrentUserId() {
 
 //makes data legible
 function renderQuestionnaire(q) {
-  // Map database field keys → human‑readable labels
-  const labels = {
-    bedtime: "Bedtime",
-    lights: "Lights tolerance",
-    guests: "Overnight guests",
-    clean: "Cleaning frequency",
-    mess: "Mess tolerance",
-    sharing: "Sharing items",
-    study_location: "Study location",
-    noise_preference: "Noise while studying",
-    intended_major: "Intended major",
+  // Map database field keys → human‑readable labels and interpretations
+  const interpretations = {
+    bedtime: {
+      label: "Bedtime",
+      values: {
+        1: "Early Bird (9-10 PM)",
+        2: "Balanced (10-11 PM)",
+        3: "Night Owl (11 PM+)"
+      }
+    },
+    lights: {
+      label: "Lights tolerance",
+      values: {
+        1: "Need complete darkness",
+        2: "Prefer dim lighting",
+        3: "Comfortable with light"
+      }
+    },
+    guests: {
+      label: "Overnight guests",
+      values: {
+        1: "Rarely",
+        2: "Occasionally",
+        3: "Frequently"
+      }
+    },
+    clean: {
+      label: "Cleaning frequency",
+      values: {
+        1: "Very tidy",
+        2: "Moderately clean",
+        3: "Relaxed about mess"
+      }
+    },
+    mess: {
+      label: "Mess tolerance",
+      values: {
+        1: "Very low",
+        2: "Moderate",
+        3: "High"
+      }
+    },
+    sharing: {
+      label: "Sharing items",
+      values: {
+        1: "Prefer personal items",
+        2: "Selective sharing",
+        3: "Open to sharing"
+      }
+    },
+    study_location: {
+      label: "Study location",
+      values: {
+        1: "Library/Outside",
+        2: "Mix of locations",
+        3: "Room only"
+      }
+    },
+    noise_preference: {
+      label: "Noise while studying",
+      values: {
+        1: "Complete silence",
+        2: "Some background noise",
+        3: "Music/Noise okay"
+      }
+    },
+    intended_major: {
+      label: "Intended major",
+      values: {
+        "engineering": "Engineering",
+        "business": "Business",
+        "arts": "Arts",
+        "sciences": "Sciences",
+        "other": "Other"
+      }
+    }
   };
 
   return `
     <ul class="questionnaire-list">
-      ${Object.entries(labels)
+      ${Object.entries(interpretations)
         .map(
-          ([key, label]) =>
-            `<li><strong>${label}:</strong> ${q[key] ?? "—"}</li>`,
+          ([key, data]) =>
+            `<li><strong>${data.label}:</strong> <span>${data.values[q[key]] ?? "—"}</span></li>`,
         )
         .join("")}
     </ul>
@@ -48,7 +113,7 @@ function buildMatchCard(matchUser) {
       <p class="match-year">Class of ${matchUser.classyear ?? ""}</p>
     </div>
 
-    <button class="view-q-btn">View their questionnaire</button>
+    <button class="view-q-btn">View their Profile</button>
     <div class="q-box" style="display:none; margin-top:1rem;"></div>
   `;
 

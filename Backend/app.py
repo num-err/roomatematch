@@ -76,9 +76,9 @@ def _best_match_for(user_id: int):
         return None
 
     # find min distance
-    best_row   = min(others, key=lambda q: _distance(me_q.answers, q.answers))
+    best_row = min(others, key=lambda q: _distance(me_q.answers, q.answers))
     # Get corresponding User
-    best_user  = User.query.get(best_row.user_id)
+    best_user = User.query.get(best_row.user_id)
     return best_user
 
 #  Front‑end routes
