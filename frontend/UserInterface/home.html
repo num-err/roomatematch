@@ -10,8 +10,9 @@
 		<link rel="stylesheet" href="main.css" />
 	</head>
 	<body class="homepage is-preload">
+		
 		<div id="page-wrapper">
-
+			
 			<!-- Header -->
 		<section id="header" class="wrapper">
 
@@ -24,10 +25,12 @@
 		<!-- This will be the navigation bar-->
 		<nav id="nav">
 			<ul>
-			<li class="current"><a href="index.html">Home</a></li>
+			<li class="current"><a href="home.html">Home</a></li>
 			<li><a href="profile.html">Profile</a></li>
 			<li><a href="questionaire.html">Questionnaire</a></li>
-			<li><a href="questionaire.html">Find Matches</a></li>
+			<li><a href="index.html">Find Matches</a></li>
+			<li><a href="messages.html">Messages</a></li>
+			<li><a href="#" onclick="logout()">Logout</a></li>
 			</ul>
 		</nav>
 
@@ -55,8 +58,7 @@
 					<div class="container">
 
 					<!-- Image -->
-						<img src="images/pic01.jpg" alt="Roommate matching" class="image featured" />
-
+						
 					<!-- Features -->
 						<section id="features">
 							<header class="style1">
@@ -105,7 +107,6 @@
 							</div>
 							<ul class="actions special">
 								<li><a href="questionaire.html" class="button style1 large">Take the Quiz</a></li>
-								<li><a href="questionaire.html" class="button style2 large">Learn More</a></li>
 							</ul>
 						</section>
 
@@ -124,5 +125,11 @@
 				</section>
 
 		</div>
+		<script>
+			function logout() {
+				localStorage.removeItem('user');
+				window.location.href = '/LoginPage/index.html';
+			}
+		</script>
 	</body>
 </html>

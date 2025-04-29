@@ -1,16 +1,451 @@
+<!doctype html>
 <html>
     <head>
+        <title>Your Profile - RoommateMatch</title>
+        <link rel="stylesheet" href="styles.css" />
+        <script
+            src="https://kit.fontawesome.com/7931924f68.js"
+            crossorigin="anonymous"
+        ></script>
+
+        <style>
+            /* Profile Page Styles */
+            body {
+                background-color: #f5f5f5;
+                background-image: url("https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=1350&q=80");
+                background-size: cover;
+                background-position: center;
+                background-attachment: fixed;
+                background-blend-mode: overlay;
+            }
+
+            .main-content {
+                background-color: rgba(255, 255, 255, 0.95);
+                min-height: 100vh;
+                padding: 2rem;
+            }
+
+            .profile-header {
+                text-align: center;
+                margin-bottom: 2rem;
+            }
+
+            .profile-header h1 {
+                font-size: 2.5rem;
+                color: #4a2c2a;
+                margin-bottom: 0.5rem;
+                text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+            }
+
+            .profile-container {
+                max-width: 800px;
+                margin: 0 auto;
+                padding: 0 1rem;
+            }
+
+            .profile-section {
+                background: white;
+                border-radius: 10px;
+                box-shadow: 0 4px 15px rgba(74, 44, 42, 0.1);
+                padding: 2rem;
+                margin-bottom: 2rem;
+                border: 1px solid rgba(74, 44, 42, 0.1);
+            }
+
+            .profile-section h2 {
+                font-size: 1.8rem;
+                color: #4a2c2a;
+                margin-bottom: 1.5rem;
+                border-bottom: 2px solid rgba(74, 44, 42, 0.1);
+                padding-bottom: 0.5rem;
+            }
+
+            .info-grid,
+            .preferences-grid {
+                display: grid;
+                gap: 1.5rem;
+            }
+
+            .info-item,
+            .preference-item {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 0.5rem 0;
+            }
+
+            .info-item .label,
+            .preference-item .label {
+                font-weight: bold;
+                color: #4a2c2a; /* Mahogany */
+            }
+
+            .info-item .value,
+            .preference-item .value {
+                color: #333;
+            }
+
+            .preference-category {
+                background: rgba(74, 44, 42, 0.05);
+                padding: 1.5rem;
+                border-radius: 8px;
+                border: 1px solid rgba(74, 44, 42, 0.1);
+            }
+
+            .preference-category h3 {
+                font-size: 1.2rem;
+                color: #4a2c2a;
+                margin-bottom: 1rem;
+            }
+
+            /* Sidebar adjustments */
+            .side-bar {
+                background-color: #484d55;
+            }
+
+            .side-bar h1 {
+                background-color: #484d55;
+                color: white;
+            }
+
+            .side-bar ul li a {
+                color: rgba(255, 255, 255, 0.8);
+            }
+
+            .side-bar ul li a:hover {
+                color: white;
+                background: rgba(255, 255, 255, 0.1);
+            }
+
+            .side-bar ul li.active a {
+                background: rgba(255, 255, 255, 0.2);
+                color: white;
+            }
+
+            label #btn,
+            label #cancel {
+                color: white;
+                background-color: #484d55;
+            }
+
+            /* Responsive Design */
+            @media (max-width: 768px) {
+                .profile-section {
+                    padding: 1.5rem;
+                }
+
+                .profile-header h1 {
+                    font-size: 2rem;
+                }
+
+                .profile-section h2 {
+                    font-size: 1.5rem;
+                }
+            }
+
+            /* Edit Mode Styles */
+            .edit-mode .value {
+                display: none;
+            }
+
+            .edit-mode .edit-input {
+                display: block;
+            }
+
+            .edit-input {
+                display: none;
+                width: 200px;
+                padding: 5px;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+            }
+
+            .edit-buttons {
+                display: flex;
+                margin-top: 1rem;
+                gap: 1rem;
+            }
+
+            .save-button,
+            .cancel-button {
+                display: none;
+            }
+
+            .edit-mode .save-button,
+            .edit-mode .cancel-button {
+                display: block;
+            }
+
+            .edit-button,
+            .save-button,
+            .cancel-button {
+                padding: 8px 16px;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+                font-weight: bold;
+                transition: background-color 0.3s;
+            }
+
+            .edit-button {
+                background-color: #484d55;
+                color: white;
+            }
+
+            .save-button {
+                background-color: #1b6b1e;
+                color: white;
+            }
+
+            .cancel-button {
+                background-color: #f44336;
+                color: white;
+            }
+
+            .edit-button:hover {
+                background-color: #3a3e45;
+            }
+
+            .save-button:hover {
+                background-color: #293b2a;
+            }
+
+            .cancel-button:hover {
+                background-color: #da190b;
+            }
+        </style>
     </head>
-<body>
-    <h1>Profile</h1>
+    <body>
+        <input type="checkbox" id="check" />
+        <label for="check">
+            <i class="fas fa-bars" id="btn"></i>
+            <i class="fas fa-times" id="cancel"></i>
+        </label>
 
+        <nav class="side-bar">
+            <h1>Roommate Match</h1>
+            <ul>
+                <li>
+                    <a href="home.html"
+                        ><i class="fas fa-home"></i> <span>Home</span></a
+                    >
+                </li>
+                <li class="active">
+                    <a href="profile.html"
+                        ><i class="fas fa-user-circle"></i>
+                        <span>Profile</span></a
+                    >
+                </li>
+                <li>
+                    <a href="questionaire.html"
+                        ><i class="fas fa-clipboard-list"></i>
+                        <span>Questionnaire</span></a
+                    >
+                </li>
+                <li>
+                    <a href="index.html"
+                        ><i class="fas fa-user-friends"></i>
+                        <span>Matches</span></a
+                    >
+                </li>
+                <li>
+                    <a href="messages.html"
+                        ><i class="fas fa-comments"></i>
+                        <span>Messages</span></a
+                    >
+                </li>
+                <li>
+                    <a href="#" onclick="logout()"
+                        ><i class="fas fa-sign-out-alt"></i>
+                        <span>Logout</span></a
+                    >
+                </li>
+            </ul>
+        </nav>
 
+        <div class="main-content">
+            <div class="profile-header">
+                <h1>Your Profile</h1>
+            </div>
 
-</body>
+            <div class="profile-container">
+                <!-- Basic Information -->
+                <div class="profile-section">
+                    <h2>Basic Information</h2>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <span class="label">Username:</span>
+                            <span class="value" id="user-name">Loading...</span>
+                            <input
+                                type="text"
+                                class="edit-input"
+                                id="edit-name"
+                                placeholder="Enter username"
+                            />
+                        </div>
+                        <div class="info-item">
+                            <span class="label">Class Year:</span>
+                            <span class="value" id="user-year">Loading...</span>
+                            <input
+                                type="text"
+                                class="edit-input"
+                                id="edit-year"
+                                placeholder="Enter class year"
+                            />
+                        </div>
+                        <div class="info-item">
+                            <span class="label">Email:</span>
+                            <span class="value" id="user-email"
+                                >Loading...</span
+                            >
+                            <input
+                                type="text"
+                                class="edit-input"
+                                id="edit-email"
+                                placeholder="Enter email"
+                            />
+                        </div>
+                    </div>
+                    <div class="edit-buttons">
+                        <button class="edit-button" onclick="toggleEditMode()">
+                            Edit
+                        </button>
+                        <button class="save-button" onclick="saveProfile()">
+                            Save
+                        </button>
+                        <button class="cancel-button" onclick="cancelEdit()">
+                            Cancel
+                        </button>
+                    </div>
+                </div>
 
+                <!-- Preferences -->
+                <div class="profile-section">
+                    <h2>Your Preferences</h2>
+                    <div class="preferences-grid">
+                        <div class="preference-category">
+                            <h3>Sleep Schedule</h3>
+                            <div class="preference-item">
+                                <span class="label">Bedtime:</span>
+                                <span class="value" id="bedtime"
+                                    >Loading...</span
+                                >
+                            </div>
+                            <div class="preference-item">
+                                <span class="label">Lights Out:</span>
+                                <span class="value" id="lights"
+                                    >Loading...</span
+                                >
+                            </div>
+                        </div>
 
+                        <div class="preference-category">
+                            <h3>Cleanliness</h3>
+                            <div class="preference-item">
+                                <span class="label">Cleanliness Level:</span>
+                                <span class="value" id="clean">Loading...</span>
+                            </div>
+                            <div class="preference-item">
+                                <span class="label">Sharing Preferences:</span>
+                                <span class="value" id="sharing"
+                                    >Loading...</span
+                                >
+                            </div>
+                        </div>
+
+                        <div class="preference-category">
+                            <h3>Study Habits</h3>
+                            <div class="preference-item">
+                                <span class="label">Study Location:</span>
+                                <span class="value" id="study-location"
+                                    >Loading...</span
+                                >
+                            </div>
+                            <div class="preference-item">
+                                <span class="label">Noise Preference:</span>
+                                <span class="value" id="noise">Loading...</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            /* Inline edit‑profile logic (unchanged) */
+            document.addEventListener("DOMContentLoaded", function () {
+                loadUserProfile();
+            });
+
+            function loadUserProfile() {
+                const user = JSON.parse(localStorage.getItem("user") || "{}");
+                if (!user.id) return;
+                document.getElementById("user-name").textContent =
+                    user.username;
+                document.getElementById("user-year").textContent =
+                    user.classyear;
+                document.getElementById("user-email").textContent = user.email;
+
+                document.getElementById("edit-name").value = user.username;
+                document.getElementById("edit-year").value = user.classyear;
+                document.getElementById("edit-email").value = user.email;
+            }
+
+            function toggleEditMode() {
+                const section = document.querySelector(".profile-section");
+                section.classList.toggle("edit-mode");
+                document.querySelector(".edit-button").textContent =
+                    section.classList.contains("edit-mode")
+                        ? "Editing..."
+                        : "Edit";
+            }
+
+            function saveProfile() {
+                const user = JSON.parse(localStorage.getItem("user") || "{}");
+                if (!user.id) return;
+
+                const updatedUser = {
+                    ...user,
+                    username: document.getElementById("edit-name").value,
+                    classyear: document.getElementById("edit-year").value,
+                    email: document.getElementById("edit-email").value,
+                };
+
+                const xhr = new XMLHttpRequest();
+                xhr.onreadystatechange = function () {
+                    if (this.readyState === 4) {
+                        const data = JSON.parse(this.responseText || "{}");
+                        if (this.status === 200) {
+                            localStorage.setItem(
+                                "user",
+                                JSON.stringify(data.user),
+                            );
+                            loadUserProfile();
+                            toggleEditMode();
+                            alert("Profile updated successfully!");
+                        } else {
+                            alert(data.error || "Failed to update profile.");
+                        }
+                    }
+                };
+
+                xhr.open("POST", "/api/update-profile", true);
+                xhr.setRequestHeader("Content-Type", "application/json");
+                xhr.send(JSON.stringify(updatedUser));
+            }
+
+            function cancelEdit() {
+                loadUserProfile();
+                toggleEditMode();
+            }
+
+            function logout() {
+                localStorage.removeItem("user");
+                window.location.href = "/LoginPage/index.html";
+            }
+        </script>
+
+        <!-- fetch questionnaire & replace “Loading…”  -->
+        <script src="../js/profile.js"></script>
+    </body>
 </html>
-
-
-<!-- going to a new webpage == webpage.location.href 
- hashing passwords in the database -->

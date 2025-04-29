@@ -1,0 +1,70 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>Messages - RoommateMatch</title>
+        <link rel="stylesheet" href="styles.css">
+        <link rel="stylesheet" href="messages.css">
+        <script src="https://kit.fontawesome.com/7931924f68.js" crossorigin="anonymous"></script>
+    </head>
+    <body>
+        <input type="checkbox" id="check">
+        <label for="check">
+            <i class="fas fa-bars" id="btn"></i>   
+            <i class="fas fa-times" id="cancel"></i>
+        </label>
+        
+        <nav class="side-bar">
+            <h1>Roommate Match</h1>
+            <ul>
+                <li><a href="home.html"><i class="fas fa-home"></i>
+                    <span>Home</span></a></li>
+                <li><a href="profile.html"><i class="fas fa-user-circle"></i> 
+                    <span>Profile</span></a></li>
+                <li><a href="questionaire.html"><i class="fas fa-clipboard-list"></i>
+                    <span>Questionnaire</span></a></li>
+                <li><a href="index.html"><i class="fas fa-user-friends"></i>
+                    <span>Matches</span></a></li>
+                <li class="active"><a href="messages.html"><i class="fas fa-comments"></i> 
+                    <span>Messages</span></a></li>
+                <li><a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span></a></li>
+            </ul>
+        </nav>
+
+        <div class="main-content">
+            <div class="messages-header">
+                <h1>Roommate Chat</h1>
+                <p></p>
+            </div>
+
+            <div class="messages-container">
+                <div class="message-card">
+                    <div class="message-header">
+                        <h2>Welcome to Roommate Chat</h2>
+                        <p class="match-info">Send messages to your matches here</p>
+                    </div>
+                    
+                    <div class="message-form">
+                        <textarea id="message-text" placeholder="Type your message here..."></textarea>
+                        <button id="send-message" class="send-button">
+                            <i class="fas fa-paper-plane"></i> Send Message
+                        </button>
+                    </div>
+
+                    <div id="message-status" class="message-status hidden">
+                        <i class="fas fa-check-circle"></i>
+                        <p>Message sent successfully!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="../js/messages.js"></script>
+        <script>
+            function logout() {
+                localStorage.removeItem('user');
+                window.location.href = '/LoginPage/index.html';
+            }
+        </script>
+    </body>
+</html> 

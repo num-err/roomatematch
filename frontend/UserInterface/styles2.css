@@ -1,22 +1,25 @@
+/* ----------  LAYOUT  ---------- */
 body{
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     max-width: 800px;
     margin: 0 auto;
     padding: 20px;
-    background-color: dodgerblue;
-    color:darkgrey;
+    background: #998686 ;
+    color: #4a4a4a;            /* darker text for legibility */
 }
 
+/* ----------  HEADINGS  ---------- */
 h1{
-    color:white;
+    color: #fff;
     text-align: center;
     margin-bottom: 30px;
-    background-color: dodgerblue;
-    padding: 20px;
+    background: #998686;
+    padding: 20px 10px;
+    border-radius: 8px;
 }
 
 .section{
-    background-color: white;
+    background: #fff;
     padding: 20px;
     margin-bottom: 20px;
     border-radius: 8px;
@@ -24,14 +27,15 @@ h1{
 }
 
 .section h2{
-    color:blue;
+    color: #4A2C2A;
     border-bottom: 2px solid #ecf0f1;
     padding-bottom: 10px;
-    margin-top: 0;
+    margin: 0 0 20px 0;
 }
 
-.progress-bar {
-    background-color: #ecf0f1;
+/* ----------  PROGRESS BAR  ---------- */
+.progress-bar{
+    background: #ecf0f1;
     height: 10px;
     border-radius: 5px;
     margin-bottom: 30px;
@@ -39,75 +43,89 @@ h1{
 }
 
 .progress{
-    background-color: #ecf0f1;
+    background:#4A2C2A;       /* blue fill so progress is visible */
     height: 100%;
     width: 0%;
-    transition: widrh 0.3s;
+    transition: width 0.3s ease-in-out;   /* fixed “widrh” typo */
 }
 
+/* ----------  QUESTIONS / OPTIONS  ---------- */
 .question{
-    color:royalblue;
+    color: #4A2C2A;
     margin-bottom: 20px;
 }
 
-label {
+label{
     display: block;
     margin-bottom: 8px;
-    font-weight: bold;
-
+    font-weight: 600;
+    line-height: 1.4;
 }
 
-select, input[type="radio"]{
+select,
+input[type="radio"]{
     margin-bottom: 5px;
-
 }
 
-.option {
-    color: gray;
+/* align each radio row neatly */
+.options{
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.option{
     display: flex;
     align-items: center;
+    gap: 8px;
+    color: #606060;
 }
 
-.option input{
-    margin-right: 8px;
-}
 .option label{
-    font-weight: normal;
+    font-weight: 400;
 }
 
-button {
-    background-color: dodgerblue;
-    color: white;
-    border:none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    margin-top: 10px;
+/* ----------  IMPORTANCE BOX  ---------- */
+.importance{
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px dotted #ccc;
 }
 
-button:hover{
-    background-color:rgb(65, 182, 225);
+.importance label{
+    font-style: italic;
+    font-weight: 400;
+    color: dimgray;
 }
 
+/* ----------  NAVIGATION BUTTONS  ---------- */
 .nav-buttons{
     display: flex;
     justify-content: space-between;
     margin-top: 20px;
 }
 
-.hidden {
-    display:none;
+button{
+    background: #4A2C2A;
+    color: #fff;
+    border: none;
+    padding: 10px 24px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.25s;
 }
 
-.importance {
-    margin-top: 8px;
-    border-top: 1px dotted #ccc;
-    padding-top: 8px;
+button:hover{
+    background: #4A2C2A;
 }
 
-.importance label{
-    font-weight: normal;
-    font-style: italic;
-    color:dimgray;
+button:disabled{
+    background: #4A2C2A;
+    cursor: not-allowed;
+}
+
+/* ----------  VISIBILITY HELPERS  ---------- */
+.hidden{
+    display: none;
 }

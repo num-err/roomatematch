@@ -1,9 +1,40 @@
+<!DOCTYPE HTML>
 <html>
     <head>
-        <title> Roommate Match</title>
-        <link rel= "stylesheet" href="styles.css">
+        <title>Your Matches - RoommateMatch</title>
+        <link rel="stylesheet" href="styles.css">
+        <link rel="stylesheet" href="matches.css">
         <script src="https://kit.fontawesome.com/7931924f68.js" crossorigin="anonymous"></script>
-        >
+        <style>
+             .side-bar {
+                background-color:#484d55; /* Mahogany */
+            }
+
+            .side-bar h1 {
+                background-color: #484d55;
+                color: white;
+            }
+
+            .side-bar ul li a {
+                color: rgba(255, 255, 255, 0.8);
+            }
+
+            .side-bar ul li a:hover {
+                color: white;
+                background: rgba(255, 255, 255, 0.1);
+            }
+
+            .side-bar ul li.active a {
+                background: rgba(255, 255, 255, 0.2);
+                color: white;
+            }
+
+            label #btn, label #cancel {
+                color: white;
+                background-color: #484d55;
+            }
+        </style>
+    
     </head>
     <body>
         <input type="checkbox" id="check">
@@ -12,39 +43,124 @@
             <i class="fas fa-times" id="cancel"></i>
         </label>
         
+        
         <nav class="side-bar">
-            <h1>My Roommate </h1>
+            <h1>Roommate Match</h1>
             <ul>
-                <li><a href="index.html"><i class="fas fa-qrcode"></i>
-                    <span>Home Page</span></a></li>
-                <li><a href="questionaire.html"><i class="fas fa-user-circle"></i> 
-                    <span>My Profile</span></a></li>
-                <li><a href="#"><i class="fas fa-user-friends"></i>
+                <li><a href="home.html"><i class="fas fa-home"></i>
+                    <span>Home</span></a></li>
+                <li><a href="profile.html"><i class="fas fa-user-circle"></i> 
+                    <span>Profile</span></a></li>
+                <li><a href="questionaire.html"><i class="fas fa-clipboard-list"></i>
+                    <span>Questionnaire</span></a></li>
+                <li class="active"><a href="index.html"><i class="fas fa-user-friends"></i>
                     <span>Matches</span></a></li>
-                <li><a href="#"><i class="fas fa-comments"></i> 
-                    <span>Message Match</span></a></li>
-                <li><a href="#"><i class="fas fa-cog"></i> 
-                    <span>Settings</span></a></li>
+                <li><a href="messages.html"><i class="fas fa-comments"></i> 
+                    <span>Messages</span></a></li>
+                <li><a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span></a></li>
             </ul>
         </nav>
 
         <div class="main-content">
-            <p>This is the homepage and this is what we are trying</p>
-            <!--
-                creating a home page heading ... need to upload
-                <h1> Home Page</h1>
-            -->
-            <ul>
-                <div class="user-tab">
-                    <div class="user-profile-setup"> User Profile Setup</div><br>
-                    <div class="user-roomate-preferences"> Roommate Preferences</div><br>
-                    <div class="user-roomate-matches"> Roommate Matches</div>
-                </div>
-            </ul>
-        </div>
-    
+            <div class="matches-header">
+                <h1>Your Roommate Matches</h1>
+                <p>Here are your most compatible potential roommates based on your questionnaire responses.</p>
+            </div>
 
-        
-        
+            <div class="matches-container" id="matches-list">
+                <!-- Placeholder cards that will be replaced when data loads -->
+                <div class="match-card placeholder">
+                    <div class="card-inner">
+                        <div class="card-front">
+                            <div class="question-mark">?</div>
+                            <p>Finding matches...</p>
+                        </div>
+                        <div class="card-back">
+                            <div class="loading-info">
+                                <i class="fas fa-sync-alt fa-spin"></i>
+                                <p>Calculating compatibility...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Add more placeholder cards as needed -->
+                <div class="match-card placeholder">
+                    <div class="card-inner">
+                        <div class="card-front">
+                            <div class="question-mark">?</div>
+                            <p>Finding matches...</p>
+                        </div>
+                        <div class="card-back">
+                            <div class="loading-info">
+                                <i class="fas fa-sync-alt fa-spin"></i>
+                                <p>Analyzing preferences...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="match-card placeholder">
+                    <div class="card-inner">
+                        <div class="card-front">
+                            <div class="question-mark">?</div>
+                            <p>Finding matches...</p>
+                        </div>
+                        <div class="card-back">
+                            <div class="loading-info">
+                                <i class="fas fa-sync-alt fa-spin"></i>
+                                <p>Checking compatibility...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <template id="match-template">
+            <div class="match-card">
+                <div class="match-header">
+                    <div class="match-info">
+                        <h2 class="match-name"></h2>
+                        <p class="match-year"></p>
+                    </div>
+                    <div class="compatibility-score">
+                        <span class="score"></span>
+                        <span class="label">Match</span>
+                    </div>
+                </div>
+                
+                <div class="match-details">
+                    <div class="detail-section">
+                        <h3>Sleep Schedule</h3>
+                        <p class="sleep-info"></p>
+                    </div>
+                    <div class="detail-section">
+                        <h3>Cleanliness</h3>
+                        <p class="clean-info"></p>
+                    </div>
+                    <div class="detail-section">
+                        <h3>Study Habits</h3>
+                        <p class="study-info"></p>
+                    </div>
+                    <div class="detail-section">
+                        <h3>Social Preferences</h3>
+                        <p class="social-info"></p>
+                    </div>
+                </div>
+
+                <div class="match-actions">
+                    <button class="view-profile">View Full Profile</button>
+                    <button class="send-message">Send Message</button>
+                </div>
+            </div>
+        </template>
+
+        <script src="/js/matches.js"></script>
+        <script>
+            function logout() {
+                localStorage.removeItem('user');
+                window.location.href = '/LoginPage/index.html';
+            }
+        </script>
     </body>
 </html>
